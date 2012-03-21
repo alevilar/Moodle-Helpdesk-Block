@@ -28,30 +28,47 @@ class block_helpdesk extends block_base {
     function init() {
         $this->title = get_string('pluginname', 'block_helpdesk');
     }
-
+        
     function applicable_formats() {
         return array('all' => true);
     }
-
+    
     function instance_allow_multiple() {
         return false;
     }
 
 
-    public function get_content() {
-	    if ($this->content !== null) {
-	      return $this->content;
-	    }
-	 	
-	    $email = 'no-email';
-	    if (! empty($this->config->email)) {
-		$email = $this->config->email;
-	    }
+    function get_content() {
 
-	    $this->content         =  new stdClass;
-	    $this->content->text   = 'El mail es: '.$email;
-	    $this->content->footer = '-**-- Footer here...';
-	 
-	    return $this->content;
+        $courseid = optional_param('courseid', 0, PARAM_INTEGER);
+        
+        if ($courseid == SITEID) {
+            $courseid = 0;
+        }
+        if ($courseid) {
+            $course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
+            $PAGE->set_course($course);
+            $context = $PAGE->context;
+        } else {
+            $context = get_context_instance(CONTEXT_SYSTEM);            
+        }
+
+        $this->content         =  new stdClass;
+        
+        $this->content->text = '';
+        if (has_capability('block/helpdesk:createticket', $context)) {
+            $this->content->text .= '<a href="esta.php">Esta es la pagina que puedo ver</a>';
+        } else {
+            $this->content->text .= 'no se pudo papa';
+        }
+        
+        if (has_capability('block/helpdesk:admin', $context)) {
+            $this->content->text .= '<a href="estaotra.php">Administrar Tickets</a>';
+        }
+        
+        $this->content->footer = '-- Footer here --';
+
+        return $this->content;
     }
-}   // Here's the closing bracket for the class definition
+    
+} 
