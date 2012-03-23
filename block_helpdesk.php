@@ -54,17 +54,10 @@ class block_helpdesk extends block_base {
         }
 
         $this->content         =  new stdClass;
-        
-        $this->content->text = '';
-        if (has_capability('block/helpdesk:createticket', $context)) {
-            $this->content->text .= '<a href="esta.php">Esta es la pagina que puedo ver</a>';
-        } else {
-            $this->content->text .= 'no se pudo papa';
-        }
-        
-        if (has_capability('block/helpdesk:admin', $context)) {
-            $this->content->text .= '<a href="estaotra.php">Administrar Tickets</a>';
-        }
+                
+        $urlTicketAdd = new moodle_url('blocks/helpdesk/ticket_add.php');
+        $urlTicketAdd = html_writer::tag('a',  get_string('nuevoticket', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
+        $this->content->text = '<br />'.$urlTicketAdd;
         
         $this->content->footer = '-- Footer here --';
 
