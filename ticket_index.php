@@ -32,14 +32,14 @@ if (!empty($notificationerror)) {
 echo $OUTPUT->header();
     echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
     
-?>
-
-A continuación puede ingresar su inquietud para ser atendida por un representante de le Mesa de Ayuda.
-
-<form method="post" action="ticket_add_process.php">
-    <textarea cols="80" rows="8" name="ticket_question"></textarea>
-    <input type="submit" value="Enviar"></input>
-</form>
-<?php
+    $subSc = "SELECT ticketid FROM {block_helpdesk_answers} GROUP BY ticketid";
+    $tickets = $DB->get_records_sql("SELECT * FROM {block_helpdesk_tickets} WHERE id NOT IN ($subSc) ORDER by created DESC");
+    
+    echo "<ul class='tickets-list'>";
+    foreach ($tickets as $t) {
+        $userObj = $DB->get_record('user', array('id'=>$t->userid));
+        echo "<li><div class='header'><span class='username'>$userObj->username</span><a href='ticket_answer?ticketid=$t->id'>responder</a></div>$t->question</li>";
+    }
+    echo "</ul>";
 
 echo $OUTPUT->footer();

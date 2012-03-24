@@ -32,14 +32,25 @@ if (!empty($notificationerror)) {
 echo $OUTPUT->header();
     echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
     
+    if ( !empty($_POST['ticket_question']) ) {
+        $answ = $_POST['ticket_question'];
+        
+        $record = new stdClass();
+        $record->userid   = $USER->id;
+        $record->question = $answ;
+        $record->created  = time();
+        $lastinsertid = $DB->insert_record('block_helpdesk_tickets', $record, $returnId = true);
+
+        // si hubo error al guardar...
+        if (!$lastinsertid) {
+            echo "Error al guardar, por favor intente nuevamente.";
+            echo $OUTPUT->footer();
+            die;
+        }
+    }
 ?>
 
-A continuación puede ingresar su inquietud para ser atendida por un representante de le Mesa de Ayuda.
-
-<form method="post" action="ticket_add_process.php">
-    <textarea cols="80" rows="8" name="ticket_question"></textarea>
-    <input type="submit" value="Enviar"></input>
-</form>
+Gracias! responderemos a la brevedad
 <?php
 
 echo $OUTPUT->footer();

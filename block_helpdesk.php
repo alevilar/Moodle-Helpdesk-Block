@@ -54,10 +54,16 @@ class block_helpdesk extends block_base {
         }
 
         $this->content         =  new stdClass;
+        $this->content->text = '';
                 
         $urlTicketAdd = new moodle_url('blocks/helpdesk/ticket_add.php');
         $urlTicketAdd = html_writer::tag('a',  get_string('nuevoticket', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
-        $this->content->text = '<br />'.$urlTicketAdd;
+        $this->content->text .= '<br />'.$urlTicketAdd;
+        
+        $urlTicketAdd = new moodle_url('blocks/helpdesk/tickets_index.php');
+        $urlTicketAdd = html_writer::tag('a',  get_string('adminticket', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
+        $this->content->text .= '<br />'.$urlTicketAdd;
+        
         
         $this->content->footer = '-- Footer here --';
 
