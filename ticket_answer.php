@@ -1,12 +1,7 @@
 <?php
-// en DESARROLLO uso este
-$config = '/var/www/moodle22/config.php';
-//$config = dirname(__FILE__) . '/../../config.php';
-
-//require_once("$CFG->libdir/formslib.php");
 
 require_once(dirname(__FILE__).'/config.php');
-require_once($config);
+
 
 require_login();
 
@@ -34,11 +29,18 @@ echo $OUTPUT->header();
     echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
     
     $tt = optional_param('ticketid', $default=NULL, $type=PARAM_CLEAN);
+
+    if ( !empty($tt) ) {
+	$ticket = $DB->get_record_sql("SELECT t.*, s.name as state from {block_helpdesk_tickets} t LEFT JOIN {block_helpdesk_states} s on (s.id = t.stateid) WHERE t.id = $tt"	);
+
+    } else {
+	die("no se paso el ID del ticket");
+    }
 //    $parname, $default=NULL, $type=PARAM_CLEAN
        
     $mensajeError = '';
     if ( !empty($_POST['ticketid']) ) {
-    if ( !empty($_POST['ticket_answer']) ) {
+    	if ( !empty($_POST['ticket_answer']) ) {
 		$answ = $_POST['ticket_answer'];
 		
 		$record = new stdClass();
@@ -48,7 +50,7 @@ echo $OUTPUT->header();
 		$record->created  = time();
 		$lastinsertid = $DB->insert_record('block_helpdesk_answers', $record, $returnId = true);
 	
-		if ( !empty($_POST['stateid']) && !empty($_POST['ticketid'])) { 
+		if ( !empty($_POST['stateid'])) { 
 		    $DB->set_field('block_helpdesk_tickets', 'stateid', $_POST['stateid'], array('id' => $_POST['ticketid']));
 		}
 
@@ -58,15 +60,14 @@ echo $OUTPUT->header();
 		    echo $OUTPUT->footer();
 		    die;
 		}
-
+		send_msg_on_solved ($USER->id, $ticket->userid, $ticket->id);
 	    } else {
 		$mensajeError = "Debe ingresar una respuesta";
-	    }
+	    }	    
 	}
         
     if (!empty($tt)) {
-        $ticket = $DB->get_record_sql("SELECT t.*, s.name as state from {block_helpdesk_tickets} t LEFT JOIN {block_helpdesk_states} s on (s.id = t.stateid) WHERE t.id = $tt"	);
-
+        
 	echo "<div class='state-$ticket->stateid'>$ticket->state</div>";
         
         $answers = $DB->get_records('block_helpdesk_answers', array('ticketid'=>$tt));
