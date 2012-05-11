@@ -5,6 +5,7 @@ $config = '/var/www/moodle22/config.php';
 
 //require_once("$CFG->libdir/formslib.php");
 
+require_once(dirname(__FILE__).'/config.php');
 require_once($config);
 
 require_login();
@@ -45,6 +46,10 @@ echo $OUTPUT->header();
         $record->created  = time();
         $lastinsertid = $DB->insert_record('block_helpdesk_answers', $record, $returnId = true);
 
+	if ( !empty($_POST['stateid']) ) {
+		$DB->set_field('block_helpdesk_tickets', 'stateid', $_POST['stateid'], array('id' => $_POST['ticketid']));
+	}
+
         // si hubo error al guardar...
         if (!$lastinsertid) {
             echo "Error al guardar, por favor intente nuevamente.";
@@ -52,26 +57,65 @@ echo $OUTPUT->header();
             die;
         }
     }
-    
-    
+        
     if (!empty($tt)) {
-        $ticket = $DB->get_record('block_helpdesk_tickets', array('id'=>$tt));
+        $ticket = $DB->get_record_sql("SELECT t.*, s.name as state from {block_helpdesk_tickets} t LEFT JOIN {block_helpdesk_states} s on (s.id = t.stateid) WHERE t.id = $tt"	);
+
+	echo "<div class='state-$ticket->stateid'>$ticket->state</div>";
         
         $answers = $DB->get_records('block_helpdesk_answers', array('ticketid'=>$tt));
-        echo "<div class='ticket-question'>$ticket->question</div>";       
-        echo "<ul>";
-        foreach ($answers as $a) {
-            echo "<li>$a->answer</li>";
-        }
-        echo "</ul>";
+
+	$userObj = $DB->get_record('user', array('id'=> $ticket->userid));
+	$url_profile = new moodle_url("/user/profile.php?id=$ticket->userid");
+	$url_profile = html_writer::tag('a',  $userObj->username, array('href' => $url_profile, 'class'=>'username' ));        
+	    
+	
+        echo "<p><span class='username'>$url_profile:</span> <span class='ticket-question'>$ticket->question</span></p>";       
+	
+	if ( count($answers) ) {
+		echo "<h4>Respuestas</h4>";
+		echo "<ul>";
+		foreach ($answers as $a) {
+	
+			$userObj = $DB->get_record('user', array('id'=> $a->userid));
+			$url_profile = new moodle_url("/user/profile.php?id=$a->userid");
+			$url_profile = html_writer::tag('a',  $userObj->username, array('href' => $url_profile, 'class'=>'username' ));        
+		    
+		    echo "<li>$url_profile: <span class='answers'>$a->answer<span></li>";
+		}
+		echo "</ul>";
+	}
+
+	$states = $DB->get_records_sql('SELECT * FROM {block_helpdesk_states} WHERE id > 1');
+
         
-        ?>
-        <form method="post" action="ticket_answer.php?ticketid=<?php echo $tt?>" name="answerform">            
-            <input type="hidden" value="<?php echo $tt?>" name="ticketid"></input>
+	if ( $ticket->stateid != STATE_SOLVED ) {
+	?>
+	
+	<h4>Añadir Respuesta</h4>
+        <form method="post" action="ticket_answer.php?ticketid=<?php echo $tt; ?>" name="answerform">            
+            <input type="hidden" value="<?php echo $tt; ?>" name="ticketid"></input>
             <textarea cols="80" rows="8" name="ticket_answer"></textarea>
+		
+	    <div>
+	    <?php
+
+		if ( has_capability('block/helpdesk:admin', $context) ) {
+			foreach ($states as $s) {				
+				echo "		<input type='radio' name='stateid' value='$s->id'>$s->name<br>";
+	    	 	} ?>
+	    <?php }?>
+	    </div>	
+	    
             <input type="submit" value="Enviar"></input>
+	    <?php 
+
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php'); 
+		?>
+            <input type="button" value="Cancelar" onclick="window.location='<?php echo $urlTicketAdd?>'"></input>
         </form>
         <?php
+	}
     }
     
 echo $OUTPUT->footer();

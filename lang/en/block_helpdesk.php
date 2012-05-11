@@ -4,3 +4,12 @@
     $string['helpdesk:admin'] = 'Admin the help desk system';
     $string['helpdesk:createticket'] = 'Open or create a new ticket';
     $string['nuevoticket'] = 'New ticket';
+    $string['adminticket'] = 'Admin tickets';
+    $string['answer'] = 'answer';
+    $string['answers'] = 'answers';
+    $string['reply'] = 'reply';
+    $string['nothing_to_reply'] = 'there´s nothing to reply';
+    $string['view_solved'] = 'click to see solved tickets';
+    $string['created_by'] = 'created by';
+
+

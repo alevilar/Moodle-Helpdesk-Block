@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/helpdesk/db" VERSION="20120320" COMMENT="XMLDB file for Moodle blocks/community"
+<XMLDB PATH="blocks/helpdesk/db" VERSION="20120510" COMMENT="XMLDB file for Moodle blocks/community"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
     <TABLE NAME="block_helpdesk_tickets" COMMENT="Community block" NEXT="block_helpdesk_answers">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="userid"/>
-        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="question"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="stateid"/>        
+        <FIELD NAME="stateid" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="stateid" NEXT="question"/>
         <FIELD NAME="question" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="userid" NEXT="created"/>
         <FIELD NAME="created" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="question"/>
       </FIELDS>
@@ -15,13 +16,22 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="block_helpdesk_answers" COMMENT="Ticket's answers" PREVIOUS="block_helpdesk_tickets">
+    <TABLE NAME="block_helpdesk_answers" COMMENT="Ticket's answers" PREVIOUS="block_helpdesk_tickets" NEXT="block_helpdesk_states">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="ticketid"/>
         <FIELD NAME="ticketid" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="FK to the ticket" PREVIOUS="id" NEXT="userid"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="ticketid" NEXT="answer"/>
         <FIELD NAME="answer" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="userid" NEXT="created"/>
         <FIELD NAME="created" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="answer"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_helpdesk_states" COMMENT="Ticket's states" PREVIOUS="block_helpdesk_answers">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="24" NOTNULL="true" SEQUENCE="false" PREVIOUS="id"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

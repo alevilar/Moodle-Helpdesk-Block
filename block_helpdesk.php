@@ -53,19 +53,24 @@ class block_helpdesk extends block_base {
             $context = get_context_instance(CONTEXT_SYSTEM);            
         }
 
+
         $this->content         =  new stdClass;
         $this->content->text = '';
                 
-        $urlTicketAdd = new moodle_url('blocks/helpdesk/ticket_add.php');
+        $urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_add.php');
         $urlTicketAdd = html_writer::tag('a',  get_string('nuevoticket', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
         $this->content->text .= '<br />'.$urlTicketAdd;
         
-        $urlTicketAdd = new moodle_url('blocks/helpdesk/tickets_index.php');
-        $urlTicketAdd = html_writer::tag('a',  get_string('adminticket', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
+        $urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
+        $urlTicketAdd = html_writer::tag('a',  'Consultas Pendientes', array('href' => $urlTicketAdd ));        
+        $this->content->text .= '<br />'.$urlTicketAdd;
+
+	$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index_solved.php');
+        $urlTicketAdd = html_writer::tag('a',  'Histórico de Consultas', array('href' => $urlTicketAdd ));        
         $this->content->text .= '<br />'.$urlTicketAdd;
         
         
-        $this->content->footer = '-- Footer here --';
+        $this->content->footer = '--';
 
         return $this->content;
     }

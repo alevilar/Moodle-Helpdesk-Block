@@ -7,6 +7,8 @@ $config = '/var/www/moodle22/config.php';
 
 require_once($config);
 
+require_once(dirname(__FILE__).'/config.php');
+
 require_login();
 
 
@@ -34,7 +36,7 @@ echo $OUTPUT->header();
     
 ?>
 
-A continuación puede ingresar su inquietud para ser atendida por un representante de le Mesa de Ayuda.
+A continuaciÃ³n puede ingresar su inquietud para ser atendida por un representante de le Mesa de Ayuda.
 
 <form method="post" action="ticket_add_process.php">
     <textarea cols="80" rows="8" name="ticket_question"></textarea>

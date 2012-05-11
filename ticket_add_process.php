@@ -5,6 +5,9 @@ $config = '/var/www/moodle22/config.php';
 
 //require_once("$CFG->libdir/formslib.php");
 
+
+require_once(dirname(__FILE__).'/config.php');
+
 require_once($config);
 
 require_login();
@@ -39,6 +42,7 @@ echo $OUTPUT->header();
         $record->userid   = $USER->id;
         $record->question = $answ;
         $record->created  = time();
+	$record->stateid = STATE_INIT; // status init
         $lastinsertid = $DB->insert_record('block_helpdesk_tickets', $record, $returnId = true);
 
         // si hubo error al guardar...
