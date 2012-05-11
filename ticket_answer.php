@@ -34,11 +34,18 @@ echo $OUTPUT->header();
     echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
     
     $tt = optional_param('ticketid', $default=NULL, $type=PARAM_CLEAN);
+
+    if ( !empty($tt) ) {
+	$ticket = $DB->get_record_sql("SELECT t.*, s.name as state from {block_helpdesk_tickets} t LEFT JOIN {block_helpdesk_states} s on (s.id = t.stateid) WHERE t.id = $tt"	);
+
+    } else {
+	die("no se paso el ID del ticket");
+    }
 //    $parname, $default=NULL, $type=PARAM_CLEAN
        
     $mensajeError = '';
     if ( !empty($_POST['ticketid']) ) {
-    if ( !empty($_POST['ticket_answer']) ) {
+    	if ( !empty($_POST['ticket_answer']) ) {
 		$answ = $_POST['ticket_answer'];
 		
 		$record = new stdClass();
@@ -58,15 +65,14 @@ echo $OUTPUT->header();
 		    echo $OUTPUT->footer();
 		    die;
 		}
-
+		send_msg_on_solved ($USER->id, $ticket->userid, $ticket->id);
 	    } else {
 		$mensajeError = "Debe ingresar una respuesta";
-	    }
+	    }	    
 	}
         
     if (!empty($tt)) {
-        $ticket = $DB->get_record_sql("SELECT t.*, s.name as state from {block_helpdesk_tickets} t LEFT JOIN {block_helpdesk_states} s on (s.id = t.stateid) WHERE t.id = $tt"	);
-
+        
 	echo "<div class='state-$ticket->stateid'>$ticket->state</div>";
         
         $answers = $DB->get_records('block_helpdesk_answers', array('ticketid'=>$tt));
