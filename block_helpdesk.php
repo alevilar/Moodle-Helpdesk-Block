@@ -62,8 +62,6 @@ class block_helpdesk extends block_base {
         $urlTicketAdd = html_writer::tag('a',  'Ayuda', array('href' => $urlTicketAdd ));        
         $this->content->text .= "<li>".$urlTicketAdd."</li>";
 
-        $urlTicketAdd = html_writer::tag('a',  'Documentación de Moodle', array('href' => "http://docs.moodle.org/all/es/P%C3%A1gina_Principal" ));        
-        $this->content->text .= "<li>".$urlTicketAdd."</li>";
 
 	$this->content->text .= "</ul>";
 
@@ -88,7 +86,7 @@ class block_helpdesk extends block_base {
 		$this->content->text .= '<li>'.$urlTicketAdd."</li>";
 
 		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index_mypending.php');
-		$urlTicketAdd = html_writer::tag('a',  'En Proceso de Solución', array('href' => $urlTicketAdd ));        
+		$urlTicketAdd = html_writer::tag('a',  'Mis Soluciones Pendientes', array('href' => $urlTicketAdd ));        
 		$this->content->text .= '<li>'.$urlTicketAdd."</li>";
 	}
 

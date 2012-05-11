@@ -1,11 +1,4 @@
 <?php
-// en DESARROLLO uso este
-$config = '/var/www/moodle22/config.php';
-//$config = dirname(__FILE__) . '/../../config.php';
-
-//require_once("$CFG->libdir/formslib.php");
-
-require_once($config);
 
 require_once(dirname(__FILE__).'/config.php');
 
