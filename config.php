@@ -1,8 +1,8 @@
 <?php
 
 // en DESARROLLO uso este
-$config = '/var/www/moodle22/config.php';
-//$config = dirname(__FILE__) . '/../../config.php';
+//$config = '/var/www/moodle22/config.php';
+$config = dirname(__FILE__) . '/../../config.php';
 require_once($config);
 
 
