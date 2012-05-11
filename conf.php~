@@ -1,0 +1,7 @@
+<?php
+
+
+
+define('STATE_INIT',1);
+define('STATE_PROCESS',2);
+define('STATE_SOLVED',3);
