@@ -36,10 +36,12 @@ echo $OUTPUT->header();
     
 ?>
 
-A continuación puede ingresar su inquietud para ser atendida por un representante de le Mesa de Ayuda.
+<h3>Crear Nueva Consulta</h3>
+A continuación puede ingresar su inquietud que ser atendida por un administrador del sistema.
 
 <form method="post" action="ticket_add_process.php">
     <textarea cols="80" rows="8" name="ticket_question"></textarea>
+	<br />
     <input type="submit" value="Enviar"></input>
 </form>
 <?php

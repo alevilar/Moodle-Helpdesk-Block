@@ -56,18 +56,49 @@ class block_helpdesk extends block_base {
 
         $this->content         =  new stdClass;
         $this->content->text = '';
-                
+        
+	$this->content->text .= '<h1>Páginas útiles</h1><ul>';
+	$urlTicketAdd = new moodle_url('/mod/page/view.php?id=1');
+        $urlTicketAdd = html_writer::tag('a',  'Ayuda', array('href' => $urlTicketAdd ));        
+        $this->content->text .= "<li>".$urlTicketAdd."</li>";
+
+        $urlTicketAdd = html_writer::tag('a',  'Documentación de Moodle', array('href' => "http://docs.moodle.org/all/es/P%C3%A1gina_Principal" ));        
+        $this->content->text .= "<li>".$urlTicketAdd."</li>";
+
+	$this->content->text .= "</ul>";
+
+
+
+
+	$this->content->text .= '<h1>Soporte Técnico</h1><ul>';
+
+        
         $urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_add.php');
         $urlTicketAdd = html_writer::tag('a',  get_string('nuevoticket', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
-        $this->content->text .= '<br />'.$urlTicketAdd;
+	// para el proyecto no quiero que vean inmediatamente este botón
+        $this->content->text .= '<li>'.$urlTicketAdd."</li>";
         
-        $urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
-        $urlTicketAdd = html_writer::tag('a',  'Consultas Pendientes', array('href' => $urlTicketAdd ));        
-        $this->content->text .= '<br />'.$urlTicketAdd;
+	if ( has_capability('block/helpdesk:admin', $context)) {
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
+		$urlTicketAdd = html_writer::tag('a',  'Consultas Pendientes', array('href' => $urlTicketAdd ));        
+		$this->content->text .= "<li>".$urlTicketAdd."</li>";
 
-	$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index_solved.php');
-        $urlTicketAdd = html_writer::tag('a',  'Histórico de Consultas', array('href' => $urlTicketAdd ));        
-        $this->content->text .= '<br />'.$urlTicketAdd;
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index_solved.php');
+		$urlTicketAdd = html_writer::tag('a',  'Histórico de Consultas', array('href' => $urlTicketAdd ));        
+		$this->content->text .= '<li>'.$urlTicketAdd."</li>";
+
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index_mypending.php');
+		$urlTicketAdd = html_writer::tag('a',  'En Proceso de Solución', array('href' => $urlTicketAdd ));        
+		$this->content->text .= '<li>'.$urlTicketAdd."</li>";
+	}
+
+	if ( !has_capability('block/helpdesk:admin', $context)) {
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index_my.php');
+		$urlTicketAdd = html_writer::tag('a',  'Mis Consultas', array('href' => $urlTicketAdd ));        
+		$this->content->text .= '<li>'.$urlTicketAdd."</li>";
+	}
+
+	$this->content->text .= '</ul>';
         
         
         $this->content->footer = '--';
@@ -76,3 +107,5 @@ class block_helpdesk extends block_base {
     }
     
 } 
+
+

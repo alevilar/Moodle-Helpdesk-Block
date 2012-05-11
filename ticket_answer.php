@@ -35,28 +35,34 @@ echo $OUTPUT->header();
     
     $tt = optional_param('ticketid', $default=NULL, $type=PARAM_CLEAN);
 //    $parname, $default=NULL, $type=PARAM_CLEAN
-    
+       
+    $mensajeError = '';
+    if ( !empty($_POST['ticketid']) ) {
     if ( !empty($_POST['ticket_answer']) ) {
-        $answ = $_POST['ticket_answer'];
-        
-        $record = new stdClass();
-        $record->userid   = $USER->id;
-        $record->answer = $answ;
-        $record->ticketid = $_POST['ticketid'];
-        $record->created  = time();
-        $lastinsertid = $DB->insert_record('block_helpdesk_answers', $record, $returnId = true);
+		$answ = $_POST['ticket_answer'];
+		
+		$record = new stdClass();
+		$record->userid   = $USER->id;
+		$record->answer = $answ;
+		$record->ticketid = $_POST['ticketid'];
+		$record->created  = time();
+		$lastinsertid = $DB->insert_record('block_helpdesk_answers', $record, $returnId = true);
+	
+		if ( !empty($_POST['stateid']) && !empty($_POST['ticketid'])) { 
+		    $DB->set_field('block_helpdesk_tickets', 'stateid', $_POST['stateid'], array('id' => $_POST['ticketid']));
+		}
 
-	if ( !empty($_POST['stateid']) ) {
-		$DB->set_field('block_helpdesk_tickets', 'stateid', $_POST['stateid'], array('id' => $_POST['ticketid']));
+		// si hubo error al guardar...
+		if (!$lastinsertid) {
+		    echo "Error al guardar, por favor intente nuevamente.";
+		    echo $OUTPUT->footer();
+		    die;
+		}
+
+	    } else {
+		$mensajeError = "Debe ingresar una respuesta";
+	    }
 	}
-
-        // si hubo error al guardar...
-        if (!$lastinsertid) {
-            echo "Error al guardar, por favor intente nuevamente.";
-            echo $OUTPUT->footer();
-            die;
-        }
-    }
         
     if (!empty($tt)) {
         $ticket = $DB->get_record_sql("SELECT t.*, s.name as state from {block_helpdesk_tickets} t LEFT JOIN {block_helpdesk_states} s on (s.id = t.stateid) WHERE t.id = $tt"	);
@@ -95,6 +101,7 @@ echo $OUTPUT->header();
 	<h4>Añadir Respuesta</h4>
         <form method="post" action="ticket_answer.php?ticketid=<?php echo $tt; ?>" name="answerform">            
             <input type="hidden" value="<?php echo $tt; ?>" name="ticketid"></input>
+	    <?php if ( $mensajeError ) echo "<div class='error'>$mensajeError</div>"?>
             <textarea cols="80" rows="8" name="ticket_answer"></textarea>
 		
 	    <div>

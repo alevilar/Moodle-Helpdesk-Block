@@ -48,7 +48,7 @@ if (!empty($notificationerror)) {
     }
 
     
-    echo "<h3>Consultas Pendientes</h3>";
+    echo "<h3>Consultas Pendientes de Respuesta</h3>";
     
     if (count($tickets)) {
         echo "<ul class='tickets-list'>";
