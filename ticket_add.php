@@ -4,8 +4,6 @@ require_once(dirname(__FILE__).'/config.php');
 
 require_login();
 
-
-
 $context = get_context_instance(CONTEXT_SYSTEM);
 $PAGE->set_context($context);
  
@@ -25,11 +23,17 @@ if (!empty($notificationerror)) {
 }
 
 echo $OUTPUT->header();
-    echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
+echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
     
+
+
+//require_once($CFG->libdir.'/formslib.php');
+
 ?>
 
 <h3>Crear Nueva Consulta</h3>
+
+
 A continuación puede ingresar su inquietud que ser atendida por un administrador del sistema.
 
 <form method="post" action="ticket_add_process.php">
@@ -37,6 +41,7 @@ A continuación puede ingresar su inquietud que ser atendida por un administrado
 	<br />
     <input type="submit" value="Enviar"></input>
 </form>
+
 <?php
 
 echo $OUTPUT->footer();

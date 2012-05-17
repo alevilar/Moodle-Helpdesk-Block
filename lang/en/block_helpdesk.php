@@ -13,3 +13,16 @@
     $string['created_by'] = 'created by';
 
 
+    $string['Open'] = 'Open';
+    $string['Closed Resolved'] = 'Closed Resolved';
+    $string['Closed Duplicated'] = 'Closed Duplicated';
+    $string['Closed Invalid'] = 'Closed Invalid';
+    $string['Comment'] = 'Comment';
+    $string['State Change'] = 'State Change';
+    $string['Assignament Changed'] = 'Assignament Changed';
+
+
+
+
+
+

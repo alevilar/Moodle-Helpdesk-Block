@@ -6,10 +6,23 @@
     $string['nuevoticket'] = 'New ticket';
     $string['adminticket'] = 'Admin tickets';
     $string['answer'] = 'answer';
-    $string['anwsers'] = 'answers';
+    $string['answers'] = 'answers';
     $string['reply'] = 'reply';
     $string['nothing_to_reply'] = 'there´s nothing to reply';
     $string['view_solved'] = 'click to see solved tickets';
     $string['created_by'] = 'created by';
+
+
+    $string['Open'] = 'Open';
+    $string['Closed Resolved'] = 'Closed Resolved';
+    $string['Closed Duplicated'] = 'Closed Duplicated';
+    $string['Closed Invalid'] = 'Closed Invalid';
+    $string['Comment'] = 'Comment';
+    $string['State Change'] = 'State Change';
+    $string['Assignament Changed'] = 'Assignament Changed';
+
+
+
+
 
 
