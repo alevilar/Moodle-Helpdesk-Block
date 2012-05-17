@@ -25,29 +25,31 @@ if (!empty($notificationerror)) {
     die();
 }
 
-echo $OUTPUT->header();
+    echo $OUTPUT->header();
     echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
     
     if ( !empty($_POST['ticket_question']) ) {
         $answ = $_POST['ticket_question'];
         
         $record = new stdClass();
-        $record->userid   = $USER->id;
+        $record->authorid   = $USER->id;
         $record->question = $answ;
         $record->created  = time();
-	$record->stateid = STATE_INIT; // status init
+	$record->stateid = STATE_OPEN; // status init
         $lastinsertid = $DB->insert_record('block_helpdesk_tickets', $record, $returnId = true);
 
         // si hubo error al guardar...
         if (!$lastinsertid) {
-            echo "Error al guardar, por favor intente nuevamente.";
+            echo get_string("error_save_to_db");
             echo $OUTPUT->footer();
             die;
         }
     }
 ?>
 
-Gracias! responderemos a la brevedad
+<p>
+¡Gracias! responderemos a la brevedad
+</p>
 <?php
 
 echo $OUTPUT->footer();

@@ -22,6 +22,12 @@
     $string['Assignament Changed'] = 'Assignament Changed';
 
 
+    $string['open_new_ticket'] = 'Open New Ticket';
+    $string['open_new_ticket_form_description'] = 'A continuación puede ingresar su inquietud que ser atendida por un administrador del sistema.';
+
+
+    $string['error_save_to_db'] = 'Error on save form, please re-try';
+	
 
 
 

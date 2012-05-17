@@ -47,11 +47,11 @@ class block_helpdesk extends block_base {
         $urlTicketAdd = html_writer::tag('a',  'Obtener ayuda', array('href' => $urlTicketAdd ));        
         $this->content->text .= "<li>".$urlTicketAdd."</li>";
 
-	if ( !has_capability('block/helpdesk:admin', $context)) {
-		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index_my.php');
-		$urlTicketAdd = html_writer::tag('a',  'Mis Consultas', array('href' => $urlTicketAdd ));        
-		$this->content->text .= '<li>'.$urlTicketAdd."</li>";
-	}
+	
+	$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
+	$urlTicketAdd = html_writer::tag('a',  'Listado de Tickets', array('href' => $urlTicketAdd ));        
+	$this->content->text .= '<li>'.$urlTicketAdd."</li>";
+	
 
 	$this->content->text .= '</ul>';
 

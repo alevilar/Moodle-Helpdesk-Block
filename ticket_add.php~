@@ -25,33 +25,18 @@ if (!empty($notificationerror)) {
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
     
-
-require_once 'HTML/QuickForm.php';
-
-
-/*** TEST FORM **/
-
-$form = new HTML_QuickForm('frmTest', 'get');
-      $form->addElement('header', 'MyHeader', 'Testing QuickForm');
-      $form->display();
-
-
-
-//require_once($CFG->libdir.'/formslib.php');
-
 ?>
 
-<h3>Crear Nueva Consulta</h3>
+<h3><?php echo get_string('block_helpdesk', 'open_new_ticket');?></h3>
 
+<?php echo get_string('block_helpdesk', 'open_new_ticket_form_description');?>
 
-A continuación puede ingresar su inquietud que ser atendida por un administrador del sistema.
 
 <form method="post" action="ticket_add_process.php">
     <textarea cols="80" rows="8" name="ticket_question"></textarea>
 	<br />
     <input type="submit" value="Enviar"></input>
 </form>
-
 <?php
 
 echo $OUTPUT->footer();

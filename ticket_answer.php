@@ -48,7 +48,7 @@ echo $OUTPUT->header();
 		$record->answer = $answ;
 		$record->ticketid = $_POST['ticketid'];
 		$record->created  = time();
-		$lastinsertid = $DB->insert_record('block_helpdesk_answers', $record, $returnId = true);
+		$lastinsertid = $DB->insert_record('block_helpdesk_changes', $record, $returnId = true);
 	
 		if ( !empty($_POST['stateid'])) { 
 		    $DB->set_field('block_helpdesk_tickets', 'stateid', $_POST['stateid'], array('id' => $_POST['ticketid']));
