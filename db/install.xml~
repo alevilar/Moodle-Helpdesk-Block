@@ -9,7 +9,7 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="stateid"/>        
         <FIELD NAME="stateid" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="authorid"/>
         <FIELD NAME="authorid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="stateid" NEXT="ownerid"/>
-	<FIELD NAME="ownerid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="authorid" NEXT="question"/>
+	<FIELD NAME="ownerid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="authorid" NEXT="question"/>
         <FIELD NAME="question" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="ownerid" NEXT="created"/>
         <FIELD NAME="created" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="question"/>
       </FIELDS>
@@ -24,7 +24,7 @@
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="ticketid" NEXT="text"/>
         <FIELD NAME="text" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="userid" NEXT="changetypeid"/>
 	<FIELD NAME="changetypeid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="text" NEXT="created"/>
-        <FIELD NAME="created" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="type"/>
+        <FIELD NAME="created" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="changetypeid"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
