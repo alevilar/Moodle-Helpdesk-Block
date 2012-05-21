@@ -27,6 +27,11 @@
 
 
     $string['error_save_to_db'] = 'Error on save form, please try again';
+
+$string['Author'] = 'Author';
+$string['Owner'] = 'Owner';
+$string['Unassigned'] = 'Unassigned';
+$string['State'] = 'State';
 	
 
 

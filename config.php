@@ -34,7 +34,7 @@ define('CHANGE_TYPE_REASSIGNAMENT',3);
 * @user_to_id ID of received user
 * @ticketid ID of the ticket
 */
-function send_msg_on_solved ($user_from_id, $user_to_id, $ticketid) {
+function send_msg_on_change ( $user_from_id, $user_to_id, $ticketid ) {
 	global $DB;
 	$userFrom = $DB->get_record('user', array('id'=>$user_from_id));
 	$userTo = $DB->get_record('user', array('id'=>$user_to_id));
@@ -43,5 +43,18 @@ function send_msg_on_solved ($user_from_id, $user_to_id, $ticketid) {
 	$urlTicketAdd = html_writer::tag('a',  'Consultas Pendientes', array('href' => $urlTicketAdd ));   
 	$messageid = message_post_message($userFrom, $userTo, "Te respondieron de la Mesa de Ayuda. Debes ir a Ayuda->Soporte Técnico->Mis Consultas", FORMAT_MOODLE);
 
+}
+
+function __db($coso){
+	echo "<pre>";
+	print_r($coso);
+	echo "</pre>";
+
+}
+
+
+function get_ticket($ticketid) {
+	global $DB;
+	return $DB->get_record_sql("SELECT t.*, s.name as state from {block_helpdesk_tickets} t LEFT JOIN {block_helpdesk_states} s on (s.id = t.stateid) WHERE t.id = $ticketid"	);
 }
 

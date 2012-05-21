@@ -8,6 +8,12 @@
    
 }
 
+
+
+/**
+	Diseño de los distintos estados
+**/
+
 .state-1{
     background-color: #B24C32;
     border: 1px solid #393B0B;
@@ -59,6 +65,29 @@ border-radius: 10px;
 text-transform: uppercase;
 }
 
+
+.state-3{
+    background-color: #33AD5C;
+    border: 1px solid #2E4D38;
+    
+        text-shadow: 1px 1px 2px #FFFF8D;
+        filter: dropshadow(color=#FFFF8D, offx=1, offy=1);
+        
+    font-size: 12px;
+    padding: 2px 4px;        
+    width: 80px;
+    float: left;
+    color: #474700;
+    margin-right: 5px;
+-webkit-border-radius: 10px;
+border-radius: 10px;
+text-transform: uppercase;
+}
+
+
+/* [EOF] Diseño de los distintos estados */
+
+
 .tickets-list{
 
 }
@@ -66,4 +95,9 @@ text-transform: uppercase;
 .responder{
     background: url(pix/reply.png) no-repeat left center ;
     padding-left: 30px;
+}
+
+.error{
+	color: red;
+	font-weight: bolder;
 }

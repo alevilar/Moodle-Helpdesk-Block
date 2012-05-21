@@ -30,19 +30,72 @@ if (!empty($notificationerror)) {
     die();
 }
 
+
     echo $OUTPUT->header();
     echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
     
     $tickets = array();
     $state_init = STATE_OPEN;
-    if ( !$es_admin && !empty($USER->id)) {
-	   $tickets = $DB->get_records_sql("SELECT t.*, s.name as status FROM {block_helpdesk_tickets} t LEFT JOIN {block_helpdesk_states} s ON (s.id = t.stateid) WHERE t.stateid = $state_init AND t.authorid = $USER->id ORDER by t.created ASC");
-    } else {
-	   $tickets = $DB->get_records_sql("SELECT t.*, s.name as status FROM {block_helpdesk_tickets} t LEFT JOIN {block_helpdesk_states} s on (s.id = t.stateid) WHERE t.stateid = $state_init ORDER BY t.created ASC");
-    }
-    
-    echo "<h3>Lista de Tickets</h3>";
 
+   $sql_base = "SELECT t.*, s.name as status %s FROM {block_helpdesk_tickets} t 
+			LEFT JOIN {block_helpdesk_states} s ON (s.id = t.stateid) %s
+			WHERE 1=1 %s ORDER by t.created ASC";
+
+
+    $sql = '';
+    if ( !$es_admin && !empty($USER->id) ) {
+	   $fields = '%s';
+	   $join = '%s';
+	   $where = " AND t.authorid = $USER->id %s ";
+	  $sql_base = sprintf($sql_base, $fields,  $join, $where) ;
+    }
+
+    if ( !empty($_GET) && !empty($_GET['stateid']) ) {
+	 //$fields = ", s.name as status %s";
+	// $join = "LEFT JOIN {block_helpdesk_states} s ON (s.id = t.stateid) %s "; 
+	 $aaaa = $_GET['stateid'];
+	 $where = " AND t.stateid =  $aaaa %s ";
+
+	$sql_base = sprintf($sql_base, "", "", $where) ;
+    }
+
+    $sql = sprintf($sql_base, "", "", "");
+    $tickets = $DB->get_records_sql($sql);
+
+    
+
+
+    echo "<h4>Filtros para búsqueda avanzada</h4>";
+?>	
+	<p>
+	<form action="ticket_index.php" method='get'>
+		<label><?php echo get_string('Author','block_helpdesk')?></label><input type='text' name='authorname' />
+		<label><?php echo get_string('Owner','block_helpdesk')?></label><input type='text' name='ownername' />
+		<br />
+
+		<label><?php echo get_string('Unassigned','block_helpdesk')?></label><input type='checkbox' name='unassigned' />
+
+		<label><?php echo get_string('State','block_helpdesk')?></label>
+			<select type='text' name='stateid'/>
+				<option value='0'>Todos</option>
+				<?php
+					$states = $DB->get_records('block_helpdesk_states');
+					
+					foreach ($states as $s) {
+						echo "    <option value='$s->id'>$s->name</option>";
+					}
+				?>
+			</select>
+
+		<br />
+		<input type="submit" value="Filtrar"/>
+
+	</form>
+	</p>
+	<?php
+
+
+    echo "<h3>Lista de Tickets</h3>";
     echo "<table><tr><th>Fecha</th><th>Autor</th><th>Owner</th><th>Estado</th><th>descripción</th><th>&nbsp;</th></tr>";	
     
     if (count($tickets)) {
@@ -66,7 +119,7 @@ if (!empty($notificationerror)) {
 	    }
 	    echo "<td>$url_profile</td>";
 
-	    echo "<td>".get_string($t->status, 'block_helpdesk')."</td>";
+	    echo "<td>$t->status</td>";
 
 	    echo "<td>".substr( $t->question, 0, 30 )."...</td>";
 
