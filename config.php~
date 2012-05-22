@@ -48,7 +48,7 @@ function send_msg_on_change ( $user_from_id, $user_to_id, $ticketid ) {
 function __db($coso){
 	echo "<pre>";
 	print_r($coso);
-	echo "<pre>";
+	echo "</pre>";
 
 }
 
