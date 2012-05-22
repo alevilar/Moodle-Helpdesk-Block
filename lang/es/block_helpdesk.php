@@ -27,3 +27,7 @@
 
     $string['error_save_to_db'] = 'Error al guardar, por favor intente nuevamente.';
 
+$string['Author'] = 'Autor';
+$string['Owner'] = 'Designado';
+$string['Unassigned'] = 'Sin asignar';
+$string['State'] = 'Estado';

@@ -25,5 +25,9 @@
     $string['open_new_ticket'] = 'Abrir Nuevo Ticket';
     $string['open_new_ticket_form_description'] = 'A continuación puede ingresar su inquietud que ser atendida por un administrador del sistema.';
 
+    $string['error_save_to_db'] = 'Error al guardar, por favor intente nuevamente.';
 
-
+$string['Author'] = 'Autor';
+$string['Owner'] = 'Designado';
+$string['Unassigned'] = 'Sin asignar';
+$string['State'] = 'Estado';
