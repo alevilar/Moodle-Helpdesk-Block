@@ -23,15 +23,16 @@
     filter: dropshadow(color=#393B0B, offx=1, offy=1);
     width: 80px;
     float: left;
-margin-right: 5px;
--webkit-border-radius: 10px;
-border-radius: 10px;
-color: #fff;
-text-transform: uppercase;
+	margin-right: 5px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	color: #fff;
+	text-transform: uppercase;
+	text-align: center;
 }
 
 
-.state-2{
+.state-3{
     background-color: #CFCF00;
     border: 1px solid #393B0B;
     font-size: 12px;
@@ -44,10 +45,11 @@ margin-right: 5px;
 -webkit-border-radius: 10px;
 border-radius: 10px;
 text-transform: uppercase;
+text-align: center;
 }
 
 
-.state-3{
+.state-2{
     background-color: #33AD5C;
     border: 1px solid #2E4D38;
     
@@ -63,6 +65,7 @@ text-transform: uppercase;
 -webkit-border-radius: 10px;
 border-radius: 10px;
 text-transform: uppercase;
+text-align: center;
 }
 
 
@@ -82,6 +85,30 @@ text-transform: uppercase;
 -webkit-border-radius: 10px;
 border-radius: 10px;
 text-transform: uppercase;
+text-align: center;
+}
+
+
+
+
+
+.changetype-id-1{
+	list-style: url([[pix:theme|helpdesk/reply]]) ;
+}
+
+.changetype-id-3{
+	color: #667;
+	list-style: url([[pix:theme|helpdesk/reassigned]]) ;
+}
+
+.changetype-id-3 a,.changetype-id-2 a,{
+	color: #65A;
+}
+
+
+.changetype-id-2{
+	color: #667;
+	list-style: url([[pix:theme|helpdesk/round]]) ;
 }
 
 

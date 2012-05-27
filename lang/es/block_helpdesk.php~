@@ -8,7 +8,7 @@
     $string['answer'] = 'respuesta';
     $string['answers'] = 'respuestas';
     $string['reply'] = 'responder';
-    $string['nothing_to_reply'] = 'No hay consultas pendientes';
+    $string['nothing_to_reply'] = 'No se obtuvieron resultados';
     $string['view_solved'] = 'Ver consultas cerradas';
     $string['created_by'] = 'creada por';
 
@@ -31,3 +31,8 @@ $string['Author'] = 'Autor';
 $string['Owner'] = 'Designado';
 $string['Unassigned'] = 'Sin asignar';
 $string['State'] = 'Estado';
+
+$string['apply_filters'] = 'Aplicar los Filtros';
+$string['advanced_filters'] = 'Filtros para búsqueda avanzada';
+
+$string['tickets_founded'] = 'tickets founded';

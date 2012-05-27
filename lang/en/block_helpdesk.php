@@ -8,7 +8,7 @@
     $string['answer'] = 'answer';
     $string['answers'] = 'answers';
     $string['reply'] = 'reply';
-    $string['nothing_to_reply'] = 'there´s nothing to reply';
+    $string['nothing_to_reply'] = 'Nothing found';
     $string['view_solved'] = 'click to see solved tickets';
     $string['created_by'] = 'created by';
 
@@ -32,6 +32,12 @@ $string['Author'] = 'Author';
 $string['Owner'] = 'Owner';
 $string['Unassigned'] = 'Unassigned';
 $string['State'] = 'State';
+
+$string['apply_filters'] = 'Apply Filters';
+$string['advanced_filters'] = 'Advanced Filters';
+
+$string['tickets_founded'] = 'tickets founded';
+
 	
 
 

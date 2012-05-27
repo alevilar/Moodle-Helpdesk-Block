@@ -37,108 +37,166 @@ if (!empty($notificationerror)) {
     $tickets = array();
     $state_init = STATE_OPEN;
 
-   $sql_base = "SELECT t.*, s.name as status %s FROM {block_helpdesk_tickets} t 
+    // SQL for sprintf the order of each %s is: fields, joins, where conditions, order by's, limit
+    $sql_base = "SELECT %s FROM {block_helpdesk_tickets} t 
 			LEFT JOIN {block_helpdesk_states} s ON (s.id = t.stateid) %s
-			WHERE 1=1 %s ORDER by t.created ASC";
-
+			WHERE 1=1 %s %s %s";
+    // this vars populates del sql search conditions, fiels an joins needed
+    $fields = array();
+    $join = array();
+    $where = array();
+    $limit = 1; //default limit
 
     $sql = '';
-    if ( !$es_admin && !empty($USER->id) ) {
-	   $fields = ' %s ';
-	   $join = ' %s ';
-	   $where = " AND t.authorid = $USER->id %s ";
-	  $sql_base = sprintf($sql_base, $fields,  $join, $where) ;
+    if ( !$es_admin && !empty($USER->id) ) {	   
+	  $where[] = "t.authorid = $USER->id";	  
     }
 
     $stateidSelected = 0;
     if ( !empty($_GET) && !empty($_GET['stateid']) ) {
-	 $fields = " %s ";
-	 $join = " %s "; 
 	 $stateidSelected = $_GET['stateid'];
-	 $where = " AND t.stateid =  $stateidSelected %s ";
-
-	$sql_base = sprintf($sql_base, $fields, $join, $where) ;
+	 $where[] = "t.stateid =  $stateidSelected";	
     }
 
 
     $ownerSelected = '';
     if ( !empty($_GET) && !empty($_GET['ownername']) ) {
-	 $fields = ", o.username %s ";
-	 $join = "LEFT JOIN {user} o ON (o.id = t.ownerid) %s "; 
+	 $fields[] = "o.username";
+	 $join[] = "{user} o ON (o.id = t.ownerid)"; 
 	 $ownerSelected = $_GET['ownername'];
-	 $where = " AND o.username LIKE  '?$ownerSelected?' %s ";
-
-	$sql_base = sprintf($sql_base, $fields, $join, $where) ;
+	 $where[] = "o.username LIKE  '?$ownerSelected?'";
     }
 
 
     $authorSelected = '';
     if ( !empty($_GET) && !empty($_GET['authorname']) ) {
-	 $fields = ", a.username %s";
-	 $join = "LEFT JOIN {user} a ON (a.id = t.authorid) %s "; 
+	 $fields[] = "a.username";
+	 $join[] = "{user} a ON (a.id = t.authorid)"; 
 	 $authorSelected = $_GET['authorname'];
-	 $where = " AND a.username LIKE  '?$authorSelected?' %s ";
-
-	$sql_base = sprintf($sql_base, $fields, $join, $where) ;
+	 $where[] = "a.username LIKE  '?$authorSelected?'";
     }
     
     $unassignedSelected = 0;
-    if ( !empty($_GET) && !empty($_GET['unassigned']) ) {
-	 $fields = "%s";
-	 $join = "%s";  
+    if ( !empty($_GET) && !empty($_GET['unassigned']) ) {	 
 	 $unassignedSelected = 1;
-	 $where = " AND t.ownerid IS NULL %s ";
-	$sql_base = sprintf($sql_base, $fields, $join, $where) ;
+	 $where[] = "t.ownerid IS NULL";
     }
 
 
-    $sql = sprintf($sql_base, "", "", "");
-    $sql = strtr( $sql, '?', '%');
+    $field_text = 't.*, s.name as status ';
+    foreach ($fields as $f){
+	$field_text .= ", $f";
+    }     
+
+    $join_text = '';
+    foreach ($join as $j){
+	$join_text .= " LEFT JOIN $j ";
+    }
+
+    $where_text = '';
+    foreach ($where as $w) {
+	$where_text .= " AND $w";
+    }
+
+    $order_by = "ORDER by t.created ASC";
+
+    $limit_text = " LIMIT $limit";
+        
+
+    // count SQL whitouth no fields, nor order nor limit    
+    $sql_count = sprintf($sql_base, 'count(*)', $join_text, $where_text, "", "") ;
+    $sql_count = sprintf($sql_count, "", "", "");   
+    $sql_count = strtr( $sql_count, '?', '%'); // converts ? to % because you can't use the % befeore the sprintf
+    $tickets_count = $DB->get_record_sql($sql_count);
+
+
+
+    // SQL query 
+    $sql_base = sprintf($sql_base, $field_text, $join_text, $where_text, $order_by, $limit_text) ;
+    $sql = sprintf($sql_base, "", "", "");   
+    $sql = strtr( $sql, '?', '%');// converts ? to % because you can't use the % befeore the sprintf
+
+    $offset = "0";
+    if ( !empty($_GET) && !empty($_GET['offset']) ) {
+	$offset = $_GET['offset'];
+    } 
+
+    $sql .= " OFFSET $offset";
 
     $tickets = $DB->get_records_sql($sql);
 
+    if (has_capability('block/helpdesk:admin', $context)) {
+	?>	
+		<p>
+		<style>
 
-    echo "<h4>Filtros para búsqueda avanzada</h4>";
-?>	
-	<p>
-	<form action="ticket_index.php" method='get'>
-		<label><?php echo get_string('Author','block_helpdesk')?></label><input type='text' name='authorname' value='<?php echo $authorSelected?>'/>
-		<label><?php echo get_string('Owner','block_helpdesk')?></label><input type='text' name='ownername' value='<?php echo $ownerSelected?>' />
-		<br />
+			.formu_helpdesk{
+				background: #ddb;
+				padding: 20px;
+			}
+			.formu_helpdesk h4{
+				border-bottom: 1px solid silver;
+			}
+			.formu_helpdesk input[type=submit]:hover{
+				background: #00446B;
+				border-top: 1px solid #002438;
+				border-left: 1px solid #002438;
+				text-shadow: 1px 1px black;
+			}
+			.formu_helpdesk label{
+				margin: 10px;
+			}
+		</style>
+		
+		<form action="ticket_index.php" method='get' class="formu_helpdesk">
+			<h4><?php echo get_string('advanced_filters', 'block_helpdesk')?></h4>
+			<label style="padding-left: 34px;"><?php echo get_string('Author','block_helpdesk')?></label><input type='text' name='authorname' value='<?php echo $authorSelected?>'/>
+			
+			<label><?php echo get_string('State','block_helpdesk')?></label>
+				<select type='text' name='stateid'/>
+					<option value='0'>Todos</option>
+					<?php
+						$states = $DB->get_records('block_helpdesk_states');
 
-		<label><?php echo get_string('Unassigned','block_helpdesk')?></label><input type='checkbox' name='unassigned'  <?php echo $unassignedSelected?'checked':''; ?>/>
-
-		<label><?php echo get_string('State','block_helpdesk')?></label>
-			<select type='text' name='stateid'/>
-				<option value='0'>Todos</option>
-				<?php
-					$states = $DB->get_records('block_helpdesk_states');
-
-					foreach ($states as $s) {
-						$checkeds = '';
-						if ($stateidSelected == $s->id) {
-							$checkeds = 'selected="selected"';
+						foreach ($states as $s) {
+							$checkeds = '';
+							if ($stateidSelected == $s->id) {
+								$checkeds = 'selected="selected"';
+							}
+							echo "    <option value='$s->id' $checkeds>$s->name</option>";
 						}
-						echo "    <option value='$s->id' $checkeds>$s->name</option>";
-					}
-				?>
-			</select>
+					?>
+				</select>
+			
 
-		<br />
-		<input type="submit" value="Filtrar"/>
+			<br />
 
-	</form>
-	</p>
+			<label><?php echo get_string('Owner','block_helpdesk')?></label><input type='text' name='ownername' value='<?php echo $ownerSelected?>' />
+
+			<label><?php echo get_string('Unassigned','block_helpdesk')?></label><input type='checkbox' name='unassigned'  <?php echo $unassignedSelected?'checked':''; ?>/>
+
+			
+
+			<br />
+			<p style="text-align: center;">
+			<input type="submit" style="margin: 20px 0px 0px 0px; padding: 10px;" value="<?php echo get_string('apply_filters', 'block_helpdesk'); ?>"/>
+			</p>
+
+		</form>
+		</p>
 	<?php
+    } // EOF capability if can admin
 
-
-    echo "<h3>Lista de Tickets</h3>";
-    echo "<table><tr><th>Fecha</th><th>Autor</th><th>Owner</th><th>Estado</th><th>descripción</th><th>&nbsp;</th></tr>";	
+    echo "<h3>Listado de Tickets</h3>";
     
-    if (count($tickets)) {
+    
+    if ( count($tickets) ) {
+	echo "<table><tr><th>&nbsp;</th><th>".get_string('date')."</th><th>".get_string('Author', 'block_helpdesk')."</th><th>".get_string('Owner', 'block_helpdesk')."</th><th>".get_string('description')."</th><th>&nbsp;</th></tr>";	
+
         echo "<tr class='tickets-list'>";
         foreach ($tickets as $t) {      
-	  echo "<tr>";      
+	  echo "<tr>";    
+    	    echo "<td><div class='state-$t->stateid'>$t->status</div></td>";  
 
             echo "<td>".date('Y-m-d H:i', $t->created)."</td>";
 
@@ -156,8 +214,6 @@ if (!empty($notificationerror)) {
 	    }
 	    echo "<td>$url_profile</td>";
 
-	    echo "<td>$t->status</td>";
-
 	    echo "<td>".substr( $t->question, 0, 30 )."...</td>";
 
 	    echo "<td><a class='responder' href='ticket_answer?ticketid=$t->id'>".get_string('go')."</a></td>";
@@ -169,4 +225,40 @@ if (!empty($notificationerror)) {
 
     echo "</table>";
 
+?>
+
+<hr />
+<p style="text-align: center">
+	<?php 
+	echo $tickets_count->count." ".get_string('tickets_founded', 'block_helpdesk'); 
+	?>
+</p>
+<p style="text-align: center">
+<?php 
+	$pags = 1;
+	$cont = 0;
+	$url_path_all = 'ticket_index?p=1';
+
+	foreach ($_GET as $k=>$g) {
+		if ( !empty($g) && $k != 'p' && $k != 'offset' ) {
+			$url_path_all .= "&$k=$g";
+		}
+	}
+	for ($i = $tickets_count->count; $i > 0; $i -= $limit) {
+
+		$offset_pag = ($pags-1) * $limit;
+		if ($pags > 1) {
+			echo " - ";
+		}
+
+		echo "<a href='$url_path_all&offset=$offset_pag'>$pags</a>";
+		$pags++;		
+	}
+	
+
+?>
+</p>
+<hr />
+
+<?php
 echo $OUTPUT->footer();

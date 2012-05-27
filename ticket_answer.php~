@@ -37,26 +37,21 @@ echo $OUTPUT->header();
     }
        
     $mensajeError = '';
-    if ( !empty($_POST['ticketid']) ) {
-		$answ = "";
-		if ( !empty($_POST['ticket_answer']) ) {
-			$answ = $_POST['ticket_answer'];
-		}
+    if ( !empty($_POST['ticketid']) ) {		
 
 		// $record is de hepldesk_changes record
 		$record = new stdClass();
 		$record->userid   = $USER->id;
 
-		$record->text = $answ;
 		$record->ticketid = $_POST['ticketid'];
 		$record->created  = time();
 
 
 		// User has make a comment or response
-		if ( !empty($answ) ) {
+		if ( !empty($_POST['ticket_answer']) ) {
 			$record->changetypeid = CHANGE_TYPE_COMMENT;
 
-			$record->text .= $answ ;
+			$record->text = $_POST['ticket_answer'] ;
 			if ( !empty($record->text) ) {
 			    $lastinsertid = $DB->insert_record('block_helpdesk_changes', $record, $returnId = true);
 
@@ -71,18 +66,23 @@ echo $OUTPUT->header();
 
 		
 		// Owner change logic
-		if ( !empty($_POST['ownerid']) &&  $_POST['ownerid'] != $ticket->ownerid) {		
+		if ( !empty($_POST['ownerid']) &&  $_POST['ownerid'] != $ticket->ownerid) {	
 
 			$newOwnerObj = $DB->get_record('user', array('id'=> $_POST['ownerid']));
 			$newOwnerObjName = $newOwnerObj->username;		
 
 			if (!empty($ticket->ownerid)) {
 				$oldOwnerObj = $DB->get_record('user', array('id'=> $ticket->ownerid));
-				$oldOwnerObjName = $oldOwnerObj->username;									
-				$record->text = "Se modificó la asignación de $oldOwnerObjName a $newOwnerObjName" ;
+				$oldOwnerObjName = $oldOwnerObj->username;	
+				if ( $_POST['ownerid'] != $USER->id) {
+					$record->text = "Asignó a <a href='$CFG->wwwroot/user/profile.php?id=$newOwnerObj->id' target='_blank'>$newOwnerObjName</a> como responsable de este ticket" ;
+				} else {
+					$record->text = "Se designó como responsable de este ticket" ;
+				}								
+				
 				$record->ownerid = $_POST['ownerid'];
 			} else {
-				$record->text = "Se asignó a $newOwnerObjName" ;
+				$record->text = "Asignó a $newOwnerObjName" ;
 				$record->ownerid = $_POST['ownerid'];
 			}
 
@@ -110,7 +110,7 @@ echo $OUTPUT->header();
 			$oldStateObj = $DB->get_record('block_helpdesk_states', array('id'=> $ticket->stateid));
 			$newStateObj = $DB->get_record('block_helpdesk_states', array('id'=> $_POST['stateid']));
 			
-			$record->text = "Se modificó el estado de $oldStateObj->name a $newStateObj->name." ;			
+			$record->text = "Modificó el estado de \"$oldStateObj->name\" a \"$newStateObj->name\"." ;			
 			$record->changetypeid = CHANGE_TYPE_STATE_CHANGE;
 
 			$recordTk = new stdClass();
@@ -150,8 +150,9 @@ echo $OUTPUT->header();
 	$url_profile = new moodle_url("/user/profile.php?id=$ticket->authorid");
 	$url_profile = html_writer::tag('a',  $userObj->username, array('href' => $url_profile, 'class'=>'username' ));        
 	    	
-        echo "<p><span class='username'>$url_profile:</span> <span class='ticket-question'>$ticket->question</span></p>";       
+        echo "<p><span class='username'>$url_profile:</span> <span class='ticket-question'>$ticket->question</span></p><br />";       
 	
+	echo "<div>";
 	if ( count($answers) ) {
 		echo "<h4>Respuestas</h4>";
 		echo "<ul>";
@@ -161,7 +162,7 @@ echo $OUTPUT->header();
 			$url_profile = new moodle_url("/user/profile.php?id=$a->userid");
 			$url_profile = html_writer::tag('a',  $userObj->username, array('href' => $url_profile, 'class'=>'username' ));        
 		    
-		    echo "<li>$url_profile: <span class='answers'>$a->text<span></li>";
+		    echo "<li class='changetype-id-$a->changetypeid'>$url_profile: <span class='answers'>$a->text<span></li>";
 		}
 		echo "</ul>";
 	}
@@ -170,14 +171,18 @@ echo $OUTPUT->header();
 	
 	?>
 	
-	<h4>Acciones</h4>
+	<h4>Seleccione la Acción a Realizar</h4>
 
 	<script type="text/javascript">
 		var Helpdesk = {
-			flag1 : true, 
-			flag2 : true,
+			/**
+			* @param flags List of Booleans
+			**/
 			flags : {},
 
+			/**
+			* @function toggle show or hides an element
+			**/
 			toggle: function(elementId) {
 				if (!this.flags.hasOwnProperty(elementId) ) {
 					this.flags[elementId] = true;
@@ -189,15 +194,6 @@ echo $OUTPUT->header();
 				}
 				this.flags[elementId] = !this.flags[elementId];
 				return this.flags[elementId];
-			},
-
-			changeVisibility1 : function() {
-				this.flag1 = this.toggle('mostrar_estado');
-
-			},
-
-			changeVisibility2 : function() {
-				this.flag2 = this.toggle('mostrar_tipo');
 			}
 			
 		};
@@ -211,14 +207,15 @@ echo $OUTPUT->header();
 	    <?php if ( $mensajeError ) echo "<div class='error'>$mensajeError</div>"?>
 
 	    <div  style="float: left;width: 34%;">
-		<h4><a href="#escribir_respuesta" onclick="Helpdesk.toggle('escribir_respuesta'); return false;">Escribir Respuesta</a></h4>
+		<h4><a href="#escribir_respuesta" onclick="Helpdesk.toggle('escribir_respuesta'); return false;">Responder</a></h4>
 		<div id="escribir_respuesta" style="display:none; background: #fff;">
 	            	<textarea cols="80" rows="8" name="ticket_answer"></textarea>
 		</div>
 	   </div>
 		
+	    <?php if (has_capability('block/helpdesk:admin', $context)) { ?>
 	    <div style="float: left;width: 33%;">
-		<h4><a href="#mostrar_estado" onclick="Helpdesk.changeVisibility1(); return false;">Modificar Estado</a></h4>
+		<h4><a href="#mostrar_estado" onclick="Helpdesk.toggle('mostrar_estado'); return false;">Modificar Estado</a></h4>
 		    <div id="mostrar_estado" style="display: none; background: #fff;">
 		    <?php
 
@@ -233,10 +230,12 @@ echo $OUTPUT->header();
 			 }
 		    ?></div>
 	    </div>
+	    <?php } ?>
 	    
 
+  	    <?php if (has_capability('block/helpdesk:admin', $context)) { ?>
 	    <div style="float: right;width: 33%;">
-		<h4><a href="#mostrar_tipo" onclick="Helpdesk.changeVisibility2(); return false;">Modificar Asignación</a></h4>
+		<h4><a href="#mostrar_tipo" onclick="Helpdesk.toggle('mostrar_tipo'); return false;">Modificar Asignación</a></h4>
 		<div id="mostrar_tipo" style="display: none;background: #fff;">
 	    <?php
 		$users = get_users_by_capability($context, 'block/helpdesk:admin');
@@ -254,6 +253,7 @@ echo $OUTPUT->header();
 	    ?>
 	    	</div>
 	    </div>
+	    <?php } ?>
 	    
 	    <div style="display: block; clear: both; padding-bottom: 20px; top: 20px; position: relative;">
 		    <input type="submit" value="Enviar" />
@@ -264,6 +264,7 @@ echo $OUTPUT->header();
 		    <input type="button" value="Cancelar y Volver" onclick="window.location='<?php echo $urlTicketAdd?>'" />
 	    </div>
         </form>
-        <?php	
+        <?php
+	echo "</div>";	
     
 echo $OUTPUT->footer();

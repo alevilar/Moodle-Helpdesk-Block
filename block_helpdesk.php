@@ -1,4 +1,5 @@
 <?php
+require_once(dirname(__FILE__).'/config.php');
 
 /**
  * Form for editing HELPDESK block instances.
@@ -62,17 +63,13 @@ class block_helpdesk extends block_base {
                 $urlTicketAdd = html_writer::tag('a',  get_string('nuevoticket', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
                 $this->content->text .= '<li>'.$urlTicketAdd."</li>";
         
-		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
-		$urlTicketAdd = html_writer::tag('a',  'Consultas Pendientes', array('href' => $urlTicketAdd ));        
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php?unassigned=on&stateid='.STATE_OPEN);
+		$urlTicketAdd = html_writer::tag('a',  'Pendientes Sin Asignar', array('href' => $urlTicketAdd ));        
 		$this->content->text .= "<li>".$urlTicketAdd."</li>";
 
-		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index_solved.php');
-		$urlTicketAdd = html_writer::tag('a',  'Histórico de Consultas', array('href' => $urlTicketAdd ));        
-		$this->content->text .= '<li>'.$urlTicketAdd."</li>";
-
-		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index_mypending.php');
-		$urlTicketAdd = html_writer::tag('a',  'Mis Soluciones Pendientes', array('href' => $urlTicketAdd ));        
-		$this->content->text .= '<li>'.$urlTicketAdd."</li>";
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
+		$urlTicketAdd = html_writer::tag('a',  'Listado de Tickets', array('href' => $urlTicketAdd ));        
+		$this->content->text .= '<li>'.$urlTicketAdd."</li>";		
 
 		$this->content->text .= '</ul>';
 	}
