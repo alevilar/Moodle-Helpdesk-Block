@@ -90,7 +90,7 @@ if (!empty($notificationerror)) {
 
     $join_text = '';
     foreach ($join as $j){
-	$field_text .= " LEFT JOIN $j ";
+	$join_text .= " LEFT JOIN $j ";
     }
 
     $where_text = '';
@@ -233,26 +233,58 @@ if (!empty($notificationerror)) {
 	echo $tickets_count->count." ".get_string('tickets_founded', 'block_helpdesk'); 
 	?>
 </p>
+
+<style>
+	a.current{
+		font-weight: bolder;
+		color: red;
+	}
+</style>
 <p style="text-align: center">
-<?php 
-	$pags = 1;
-	$cont = 0;
+<?php 	
 	$url_path_all = 'ticket_index?p=1';
+	$cant_pags = ceil($tickets_count->count / $limit);
+	$pags = 1; // printed links counter
+	$max_links_to_show = 8; //cant of pages links to be showed
+	$pag_max = ($cant_pags>$max_links_to_show)?$max_links_to_show:$cant_pags; 
+
 
 	foreach ($_GET as $k=>$g) {
 		if ( !empty($g) && $k != 'p' && $k != 'offset' ) {
 			$url_path_all .= "&$k=$g";
 		}
 	}
-	for ($i = $tickets_count->count; $i > 0; $i -= $limit) {
 
-		$offset_pag = ($pags-1) * $limit;
-		if ($pags > 1) {
+	$current_i = $offset / $limit;
+
+	// making this, previus link will be printed
+	if ($current_i > 0 ) {
+		$current_i--;
+	}
+
+	for ($i = $current_i; $i < $cant_pags && $cant_pags > 1; $i++) {
+
+		$offset_pag = ($i * $limit);		
+				
+		if ($pags-1) {
 			echo " - ";
 		}
+			
+		
+		$class_put = '';
+		if ($offset_pag == $offset) {
+			$class_put = 'class="current"';
+		}
+		$pagName = $i+1;
+		echo "<a href='$url_path_all&offset=$offset_pag' $class_put>$pagName</a>";
 
-		echo "<a href='$url_path_all&offset=$offset_pag'>$pags</a>";
-		$pags++;		
+		if ($pags == $pag_max) {
+			break;
+		}
+
+		$pags++;
+
+				
 	}
 	
 
