@@ -2,10 +2,7 @@
 
 require_once(dirname(__FILE__).'/config.php');
 
-
 require_login();
-
-
 
 $context = get_context_instance(CONTEXT_SYSTEM);
 $PAGE->set_context($context);
@@ -15,7 +12,6 @@ $PAGE->set_heading($SITE->fullname);
 $PAGE->set_pagelayout('frontpage');
 $PAGE->set_title(get_string('helpdesk', 'block_helpdesk'));
 $PAGE->navbar->add(get_string('helpdesk', 'block_helpdesk'));
-
 
 if (!empty($notificationerror)) {
     echo $OUTPUT->header();
@@ -50,7 +46,7 @@ if (!empty($notificationerror)) {
 ?>
 
 <p>
-¡Gracias! responderemos a la brevedad
+<?php echo get_string('ticket_added', 'block_helpdesk');?>
 </p>
 <?php
 

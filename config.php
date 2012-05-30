@@ -44,7 +44,7 @@ function send_msg_on_change ( $user_from_id, $user_to_id, $ticketid ) {
 
 	$urlTicketAdd = new moodle_url("/blocks/helpdesk/ticket_answer?ticketid=$ticketid");
 	$urlTicketAdd = html_writer::tag('a',  'Consultas Pendientes', array('href' => $urlTicketAdd ));   
-	$messageid = message_post_message($userFrom, $userTo, "Respondí tu consulta. Debes ir al listado de tickets ubicado en el bloque Mesa de Ayuda para verla.", FORMAT_PLAIN);
+	$messageid = message_post_message($userFrom, $userTo, "Se respondio a tu consulta en el sistema de tickets, para ver la respusta [cliquear aca](/blocks/helpdesk/ticket_answer?ticketid=".$ticketid.")", FORMAT_MARKDOWN);
 
 }
 
