@@ -83,6 +83,13 @@ if (!empty($notificationerror)) {
     }
 
 
+    $prioritySelected = '';
+    if ( !empty($_GET) && !empty($_GET['priority']) ) {
+	 $prioritySelected = $_GET['priority'];
+	 $where[] = "t.priority = $prioritySelected";
+    }
+
+
     $field_text = 't.*, s.name as status ';
     foreach ($fields as $f){
 	$field_text .= ", $f";
@@ -98,7 +105,7 @@ if (!empty($notificationerror)) {
 	$where_text .= " AND $w";
     }
 
-    $order_by = "ORDER by t.priority DESC, t.created ASC";
+    $order_by = "ORDER by t.created ASC";
 
     $limit_text = " LIMIT $limit";
         
@@ -153,7 +160,7 @@ if (!empty($notificationerror)) {
 			<label style="padding-left: 34px;"><?php echo get_string('Author','block_helpdesk')?></label><input type='text' name='authorname' value='<?php echo $authorSelected?>'/>
 			
 			<label><?php echo get_string('State','block_helpdesk')?></label>
-				<select type='text' name='stateid'/>
+				<select type='text' name='stateid'/ style="width: 200px;">
 					<option value='0'>Todos</option>
 					<?php
 						$states = $DB->get_records('block_helpdesk_states');
@@ -174,6 +181,21 @@ if (!empty($notificationerror)) {
 			<label><?php echo get_string('Owner','block_helpdesk')?></label><input type='text' name='ownername' value='<?php echo $ownerSelected?>' />
 
 			<label><?php echo get_string('Unassigned','block_helpdesk')?></label><input type='checkbox' name='unassigned'  <?php echo $unassignedSelected?'checked':''; ?>/>
+
+
+			<label><?php echo get_string('priority','block_helpdesk')?></label>
+			<select name="priority">
+				echo "<option value=''>Todos</option>";
+				<?php 				
+					foreach ( $priorities as $k=>$p ) {
+						$markSelected = '';
+						if ( $prioritySelected == $k ) {
+							$markSelected =  'selected="selected"';
+						}
+						echo "<option value='$k' $markSelected>$p</option>";
+					}
+				?>
+			</select>
 
 			
 

@@ -166,7 +166,7 @@ echo $OUTPUT->header();
 	    	
 	?>
 	<p style="margin-top: -13px">
-		<div style="float: right">
+		<div style="float: right" class="priority-<?php echo $ticket->priority ?>">
 			<span><?php  echo get_string('priority', 'block_helpdesk')?>:</span>
 			<?php echo $priorities[$ticket->priority];?>
 		</div>
