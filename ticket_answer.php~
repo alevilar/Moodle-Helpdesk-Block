@@ -57,7 +57,7 @@ echo $OUTPUT->header();
 
 			    // si hubo error al guardar...
 			    if (!$lastinsertid) {
-				echo "Error al guardar, por favor intente nuevamente.";
+				echo get_string('error_save', 'block_helpdesk');
 				echo $OUTPUT->footer();
 				die;
 			    }
@@ -66,12 +66,26 @@ echo $OUTPUT->header();
 
 
 
-		// User has change the pririty
-		if ( isset($_POST['priority']) && is_numeric($_POST['priority']) ) {	
+		// User has change the priority
+		if ( isset($_POST['priority']) && is_numeric($_POST['priority']) && $ticket->priority != $_POST['priority'] ) {	
 			$recordTk = new stdClass();
 			$recordTk->priority =  $_POST['priority'];
 			$recordTk->id = $ticket->id;
-			$DB->update_record('block_helpdesk_tickets', $recordTk);		
+			$DB->update_record('block_helpdesk_tickets', $recordTk);	
+
+			$record->changetypeid = CHANGE_TYPE_PRIORITY;
+
+			$record->text = sprintf(get_string('priority_changed', 'block_helpdesk'), $priorities[$ticket->priority],$priorities[$_POST['priority']]);
+			if ( !empty($record->text) ) {
+			    $lastinsertid = $DB->insert_record('block_helpdesk_changes', $record, $returnId = true);
+
+			    // si hubo error al guardar...
+			    if (!$lastinsertid) {
+				echo get_string('error_save', 'block_helpdesk');
+				echo $OUTPUT->footer();
+				die;
+			    }
+			}	
 		}
 
 
@@ -88,7 +102,7 @@ echo $OUTPUT->header();
 				if ( $_POST['ownerid'] != $USER->id) {					
 					$record->text = sprintf(get_string('user_assigned_change', 'block_helpdesk') , "<a href='$CFG->wwwroot/user/profile.php?id=$newOwnerObj->id' target='_blank'>$newOwnerObjName</a>");
 				} else {
-					$record->text = "Se designó como responsable de este ticket" ;
+					$record->text = get_string('user_autoassigned_change', 'block_helpdesk') ;
 				}								
 				
 				$record->ownerid = $_POST['ownerid'];
@@ -109,7 +123,7 @@ echo $OUTPUT->header();
 
 			    // si hubo error al guardar...
 			    if (!$lastinsertid) {
-				echo "Error al guardar, por favor intente nuevamente.";
+				echo get_string('error_save', 'block_helpdesk');
 				echo $OUTPUT->footer();
 				die;
 			    }
@@ -122,7 +136,7 @@ echo $OUTPUT->header();
 			$oldStateObj = $DB->get_record('block_helpdesk_states', array('id'=> $ticket->stateid));
 			$newStateObj = $DB->get_record('block_helpdesk_states', array('id'=> $_POST['stateid']));
 			
-			$record->text = "Modificó el estado de \"$oldStateObj->name\" a \"$newStateObj->name\"." ;			
+			$record->text = sprintf(get_string('state_changed', 'block_helpdesk'), $oldStateObj->name, $newStateObj->name );			
 			$record->changetypeid = CHANGE_TYPE_STATE_CHANGE;
 
 			$recordTk = new stdClass();
@@ -135,7 +149,7 @@ echo $OUTPUT->header();
 
 			    // si hubo error al guardar...
 			    if (!$lastinsertid) {
-				echo "Error al guardar, por favor intente nuevamente.";
+				echo get_string('error_save', 'block_helpdesk');
 				echo $OUTPUT->footer();
 				die;
 			    }
@@ -147,7 +161,7 @@ echo $OUTPUT->header();
 	    
 		// show error message on empty form submit
 		if ( empty($record->text) ) {
-		    $mensajeError = "Debe ingresar una respuesta";
+		    $mensajeError = get_strin('write_response', 'block_helpdesk');
 		}
 
 		// get updated $ticket data
@@ -179,14 +193,17 @@ echo $OUTPUT->header();
 	<?php
 	if ( count($answers) ) {
 		echo "<h4>Respuestas</h4>";
-		echo "<ul style='margin-left: 0px'>";
+		echo "<ul class='changes' style='margin-left: 0px'>";
 		foreach ($answers as $a) {
 	
 			$userObj = $DB->get_record('user', array('id'=> $a->userid));
 			$url_profile = new moodle_url("/user/profile.php?id=$a->userid");
 			$url_profile = html_writer::tag('a',  $userObj->username, array('href' => $url_profile, 'class'=>'username' ));        
-		    
-		    echo "<li class='changetype-id-$a->changetypeid'>$url_profile: <span class='answers'>$a->text<span></li>";
+		    	$date =  ' ' . date('d/m/Y H:i',$a->created);
+
+			$responsss = ($a->changetypeid == CHANGE_TYPE_COMMENT)? get_string('responds', 'block_helpdesk').':<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;':': ';
+			
+		    	echo "<li class='changetype-id-$a->changetypeid'><span class='date'>$date</span><span class='username'> $url_profile $responsss<span class='answers'>$a->text<span></li>";
 		}
 		echo "</ul>";
 	}

@@ -45,8 +45,12 @@ $string['request_action'] = 'Acciones';
 
 $string['no_assigned'] = 'sin asignar';
 
-$string['user_assigned_change'] = '"Asignó a %s como responsable de este ticket"';
+$string['user_assigned_change'] = 'Asignó a %s como responsable de este ticket';
 $string['user_autoassigned_change'] = "Se auto-designó como responsable de este ticket" ;
 $string['error_save'] = "Error al guardar, por favor intente nuevamente.";
+$string['responds'] = 'respondió';
+$string['priority_changed'] = 'Se modificó la prioridad "%s" por "%s"';
+$string['write_response'] = "Al menos debe ingresar una respuesta";
+$string['state_changed'] = 'Modificó el estado de "%s" a "%s".';
 
 

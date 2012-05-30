@@ -105,9 +105,7 @@ text-align: center;
 	padding: 10px;
 	background: grey;
 	overflow: hidden;
-}
-#ticket_index .responder a{
-	color: white;
+	color: #fff;
 }
 
 #ticket_index .responder:hover{
@@ -117,10 +115,17 @@ text-align: center;
 
 
 
+ul.changes .date{
+	color: grey;
+	font-size: 10px;
+}
+
+/** for comments **/
 .changetype-id-1{
 	list-style: url(../blocks/helpdesk/pix/reply.png) ;
 }
 
+/** for people assignments **/
 .changetype-id-3{
 	color: #667;
 	list-style: url(../blocks/helpdesk/pix/Reassigned.gif) ;
@@ -130,7 +135,7 @@ text-align: center;
 	color: #65A;
 }
 
-
+/** for state changes **/
 .changetype-id-2{
 	color: #667;
 	list-style: url(../blocks/helpdesk/pix/round.gif) ;

@@ -49,5 +49,9 @@ $string['no_assigned'] = 'No Assigned';
 
 $string['user_assigned_change'] = 'User %s has being assigned as responsable of this ticket';
 $string['user_autoassigned_change'] = "He auto-assigned as responsable of this ticket" ;
-$string['error_save'] = "Error saving, please try again."
+$string['error_save'] = "Error saving, please try again.";
+$string['responds'] = 'responds';
+$string['priority_changed'] = 'Priority changed from "%s" to "%s"';
+$string['write_response'] = 'Please, write an answer';
+$string['state_changed'] = 'The state has changed from "%s" to "%s".' ;
 
