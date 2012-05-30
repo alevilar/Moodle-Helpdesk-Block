@@ -230,7 +230,7 @@ if (!empty($notificationerror)) {
 	
 	    if ( $t->ownerid ) {
 	        $userObj = $DB->get_record('user', array('id'=>$t->ownerid));
-      	        $url_profile = new moodle_url("/user/profile.php?id=".$t->authorid);
+      	        $url_profile = new moodle_url("/user/profile.php?id=".$t->ownerid);
 	        $url_profile = html_writer::tag('a',  $userObj->username, array('href' => $url_profile, 'class'=>'username' )); 
 	    } else {
 		$url_profile = get_string('no_assigned', 'block_helpdesk');
