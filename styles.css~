@@ -136,7 +136,7 @@ ul.changes .date{
 }
 
 /** for state changes **/
-.changetype-id-2{
+.changetype-id-2, .changetype-id-4{
 	color: #667;
 	list-style: url(../blocks/helpdesk/pix/round.gif) ;
 }

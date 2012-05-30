@@ -216,8 +216,9 @@ if (!empty($notificationerror)) {
 	echo "<table id='ticket_index'><tr><th>&nbsp;</th><th>".get_string('priority', 'block_helpdesk')."</th><th>".get_string('date')."</th><th>".get_string('Author', 'block_helpdesk')."</th><th>".get_string('Owner', 'block_helpdesk')."</th><th>".get_string('description')."</th><th >&nbsp;</th></tr>";	
 
         echo "<tr class='tickets-list'>";
-        foreach ($tickets as $t) {      
-	  echo "<tr>";    
+        foreach ($tickets as $t) {   
+		$urlTo = "ticket_answer?ticketid=$t->id";   
+	  echo "<tr onclick='window.location = \"$urlTo\"'>";    
     	    echo "<td><div class='state-$t->stateid'>$t->status</div></td>";  
 	    echo "<td>".$priorities[$t->priority]."</td>";
             echo "<td>".date('Y-m-d H:i', $t->created)."</td>";

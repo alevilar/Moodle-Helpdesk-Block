@@ -95,6 +95,10 @@ text-align: center;
 }
 
 
+#ticket_index tr{
+	cursor:pointer;cursor:hand
+}
+
 #ticket_index tr:hover{
 	background: #FCFCFC;
 }
