@@ -34,7 +34,19 @@ echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
 
 <form method="post" action="ticket_add_process.php">
     <textarea cols="80" rows="8" name="ticket_question"></textarea>
+
 	<br />
+    <?php echo get_string('priority', 'block_helpdesk')?>: 
+    <select name="priority">
+	<?php 
+		$first = true;
+	
+		foreach ( $priorities as $k=>$p ) {
+			echo "<option value='$k'>$p</option>";
+		}
+	?>
+    </select>
+	<br /><br />
     <input type="submit" value="Enviar"></input>
 </form>
 <?php

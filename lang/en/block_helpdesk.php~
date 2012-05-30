@@ -36,7 +36,9 @@ $string['State'] = 'State';
 $string['apply_filters'] = 'Apply Filters';
 $string['advanced_filters'] = 'Advanced Filters';
 
-$string['tickets'] = 'tickets';
+$string['tickets_founded'] = 'tickets founded';
+
+$string['priority'] = 'prioridad';
 
 	
 

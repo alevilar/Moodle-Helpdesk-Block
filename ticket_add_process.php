@@ -32,8 +32,10 @@ if (!empty($notificationerror)) {
         $answ = $_POST['ticket_question'];
         
         $record = new stdClass();
+
         $record->authorid   = $USER->id;
         $record->question = $answ;
+	$record->priority = $_POST['priority'];
         $record->created  = time();
 	$record->stateid = STATE_OPEN; // status init
         $lastinsertid = $DB->insert_record('block_helpdesk_tickets', $record, $returnId = true);

@@ -19,6 +19,11 @@ define('CHANGE_TYPE_COMMENT',1);
 define('CHANGE_TYPE_STATE_CHANGE',2);
 define('CHANGE_TYPE_REASSIGNAMENT',3);
 
+$priorities = array(
+    1 => 'Normal',
+    0 => 'Low',   
+    2 => 'Hight',
+);
 /*         EOF: Statics Vars Definition     */
 
 
@@ -38,7 +43,7 @@ function send_msg_on_change ( $user_from_id, $user_to_id, $ticketid ) {
 
 	$urlTicketAdd = new moodle_url("/blocks/helpdesk/ticket_answer?ticketid=$ticketid");
 	$urlTicketAdd = html_writer::tag('a',  'Consultas Pendientes', array('href' => $urlTicketAdd ));   
-	$messageid = message_post_message($userFrom, $userTo, "Te respondieron de la Mesa de Ayuda. Debes ir a Ayuda->Soporte Técnico->Mis Consultas", FORMAT_MOODLE);
+	$messageid = message_post_message($userFrom, $userTo, "Respondí tu consulta. Debes ir al listado de tickets ubicado en el bloque Mesa de Ayuda para verla.", FORMAT_PLAIN);
 
 }
 

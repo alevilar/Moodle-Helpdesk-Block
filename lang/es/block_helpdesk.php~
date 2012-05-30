@@ -35,4 +35,4 @@ $string['State'] = 'Estado';
 $string['apply_filters'] = 'Aplicar los Filtros';
 $string['advanced_filters'] = 'Filtros para búsqueda avanzada';
 
-$string['tickets_founded'] = 'tickets founded';
+$string['tickets_founded'] = 'tickets encontrados';

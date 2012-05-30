@@ -36,3 +36,5 @@ $string['apply_filters'] = 'Aplicar los Filtros';
 $string['advanced_filters'] = 'Filtros para búsqueda avanzada';
 
 $string['tickets_founded'] = 'tickets encontrados';
+
+$string['priority'] = 'prioridad';

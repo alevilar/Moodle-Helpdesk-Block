@@ -38,6 +38,8 @@ $string['advanced_filters'] = 'Advanced Filters';
 
 $string['tickets_founded'] = 'tickets founded';
 
+$string['priority'] = 'priority';
+
 	
 
 

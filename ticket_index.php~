@@ -45,7 +45,7 @@ if (!empty($notificationerror)) {
     $fields = array();
     $join = array();
     $where = array();
-    $limit = 1; //default limit
+    $limit = 30; //default limit
 
     $sql = '';
     if ( !$es_admin && !empty($USER->id) ) {	   
@@ -98,7 +98,7 @@ if (!empty($notificationerror)) {
 	$where_text .= " AND $w";
     }
 
-    $order_by = "ORDER by t.created ASC";
+    $order_by = "ORDER by t.priority DESC, t.created ASC";
 
     $limit_text = " LIMIT $limit";
         
@@ -191,13 +191,13 @@ if (!empty($notificationerror)) {
     
     
     if ( count($tickets) ) {
-	echo "<table><tr><th>&nbsp;</th><th>".get_string('date')."</th><th>".get_string('Author', 'block_helpdesk')."</th><th>".get_string('Owner', 'block_helpdesk')."</th><th>".get_string('description')."</th><th>&nbsp;</th></tr>";	
+	echo "<table id='ticket_index'><tr><th>&nbsp;</th><th>".get_string('priority', 'block_helpdesk')."</th><th>".get_string('date')."</th><th>".get_string('Author', 'block_helpdesk')."</th><th>".get_string('Owner', 'block_helpdesk')."</th><th>".get_string('description')."</th><th >&nbsp;</th></tr>";	
 
         echo "<tr class='tickets-list'>";
         foreach ($tickets as $t) {      
 	  echo "<tr>";    
     	    echo "<td><div class='state-$t->stateid'>$t->status</div></td>";  
-
+	    echo "<td>".$priorities[$t->priority]."</td>";
             echo "<td>".date('Y-m-d H:i', $t->created)."</td>";
 
 	    $userObj = $DB->get_record('user', array('id'=>$t->authorid));
@@ -216,7 +216,7 @@ if (!empty($notificationerror)) {
 
 	    echo "<td>".substr( $t->question, 0, 30 )."...</td>";
 
-	    echo "<td><a class='responder' href='ticket_answer?ticketid=$t->id'>".get_string('go')."</a></td>";
+	    echo "<td style='text-align: right;'><a class='responder' href='ticket_answer?ticketid=$t->id'>".get_string('go')."</a></td>";
         }
         echo "</tr>";
     } else {
@@ -230,7 +230,7 @@ if (!empty($notificationerror)) {
 <hr />
 <p style="text-align: center">
 	<?php 
-	echo $tickets_count->count." ".get_string('tickets_founded', 'block_helpdesk'); 
+	echo $tickets_count->count?$tickets_count->count." ".get_string('tickets_founded', 'block_helpdesk'):''; 
 	?>
 </p>
 
