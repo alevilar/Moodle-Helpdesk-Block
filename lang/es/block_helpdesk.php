@@ -40,3 +40,4 @@ $string['tickets_founded'] = 'tickets encontrados';
 $string['priority'] = 'prioridad';
 $string['priority_ask'] = 'Ingrese la prioridad de la consulta';
 $string['ticket_added'] = 'Gracias por su consulta, pronto recibirá una respuesta';
+$string['request_action'] = 'Acciones';

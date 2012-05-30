@@ -41,4 +41,5 @@ $string['tickets_founded'] = 'tickets founded';
 $string['priority'] = 'priority';
 $string['priority_ask'] = 'Enter priority';
 $string['ticket_added'] = 'Thank you for your question';
+$string['request_action'] = 'Select an action';
 

@@ -23,7 +23,7 @@ define('CHANGE_TYPE_REASSIGNAMENT',3);
 $priorities = array(
     1 => 'Normal',
     0 => 'Low',   
-    2 => 'Hight',
+    2 => 'High',
 );
 /*         EOF: Statics Vars Definition     */
 
