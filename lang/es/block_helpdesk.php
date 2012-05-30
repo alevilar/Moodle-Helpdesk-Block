@@ -40,5 +40,5 @@ $string['tickets_founded'] = 'tickets encontrados';
 $string['priority'] = 'prioridad';
 
 
-$string['request_action'] = 'Seleccione la Acción a Realizar';
+$string['request_action'] = 'Acciones';
 
