@@ -84,7 +84,7 @@ if (!empty($notificationerror)) {
 
 
     $prioritySelected = '';
-    if ( !empty($_GET) && !empty($_GET['priority']) ) {
+    if ( !empty($_GET) && isset($_GET['priority']) && is_numeric($_GET['priority'])) {
 	 $prioritySelected = $_GET['priority'];
 	 $where[] = "t.priority = $prioritySelected";
     }
@@ -189,7 +189,7 @@ if (!empty($notificationerror)) {
 				<?php 				
 					foreach ( $priorities as $k=>$p ) {
 						$markSelected = '';
-						if ( $prioritySelected == $k ) {
+						if ( is_numeric($prioritySelected) && $prioritySelected == $k ) {
 							$markSelected =  'selected="selected"';
 						}
 						echo "<option value='$k' $markSelected>$p</option>";
@@ -290,8 +290,7 @@ if (!empty($notificationerror)) {
 				
 		if ($pags-1) {
 			echo " - ";
-		}
-			
+		}			
 		
 		$class_put = '';
 		if ($offset_pag == $offset) {

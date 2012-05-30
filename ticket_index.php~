@@ -84,7 +84,7 @@ if (!empty($notificationerror)) {
 
 
     $prioritySelected = '';
-    if ( !empty($_GET) && !empty($_GET['priority']) ) {
+    if ( !empty($_GET) && isset($_GET['priority']) && is_numeric($_GET['priority'])) {
 	 $prioritySelected = $_GET['priority'];
 	 $where[] = "t.priority = $prioritySelected";
     }
@@ -160,7 +160,7 @@ if (!empty($notificationerror)) {
 			<label style="padding-left: 34px;"><?php echo get_string('Author','block_helpdesk')?></label><input type='text' name='authorname' value='<?php echo $authorSelected?>'/>
 			
 			<label><?php echo get_string('State','block_helpdesk')?></label>
-				<select type='text' name='stateid'/>
+				<select type='text' name='stateid'/ style="width: 200px;">
 					<option value='0'>Todos</option>
 					<?php
 						$states = $DB->get_records('block_helpdesk_states');
@@ -290,8 +290,7 @@ if (!empty($notificationerror)) {
 				
 		if ($pags-1) {
 			echo " - ";
-		}
-			
+		}			
 		
 		$class_put = '';
 		if ($offset_pag == $offset) {
