@@ -64,17 +64,28 @@ echo $OUTPUT->header();
 			}
 		}
 
+
+
+		// User has change the pririty
+		if ( isset($_POST['priority']) && is_numeric($_POST['priority']) ) {	
+			$recordTk = new stdClass();
+			$recordTk->priority =  $_POST['priority'];
+			$recordTk->id = $ticket->id;
+			$DB->update_record('block_helpdesk_tickets', $recordTk);		
+		}
+
+
 		
 		// Owner change logic
 		if ( !empty($_POST['ownerid']) &&  $_POST['ownerid'] != $ticket->ownerid) {	
 
 			$newOwnerObj = $DB->get_record('user', array('id'=> $_POST['ownerid']));
-			$newOwnerObjName = $newOwnerObj->username;		
+			$newOwnerObjName = $newOwnerObj->username;
 
 			if (!empty($ticket->ownerid)) {
 				$oldOwnerObj = $DB->get_record('user', array('id'=> $ticket->ownerid));
 				$oldOwnerObjName = $oldOwnerObj->username;	
-				if ( $_POST['ownerid'] != $USER->id) {
+				if ( $_POST['ownerid'] != $USER->id) {					
 					$record->text = "Asignó a <a href='$CFG->wwwroot/user/profile.php?id=$newOwnerObj->id' target='_blank'>$newOwnerObjName</a> como responsable de este ticket" ;
 				} else {
 					$record->text = "Se designó como responsable de este ticket" ;
@@ -134,11 +145,12 @@ echo $OUTPUT->header();
 		// send email or moodle message
 		send_msg_on_change($USER->id, $ticket->authorid, $ticket->id);
 	    
-		// on empty form submit
+		// show error message on empty form submit
 		if ( empty($record->text) ) {
 		    $mensajeError = "Debe ingresar una respuesta";
 		}
 
+		// get updated $ticket data
 		$ticket = get_ticket($tt);    
 	}
         
@@ -150,13 +162,23 @@ echo $OUTPUT->header();
 	$userObj = $DB->get_record('user', array('id'=> $ticket->authorid));
 	$url_profile = new moodle_url("/user/profile.php?id=$ticket->authorid");
 	$url_profile = html_writer::tag('a',  $userObj->username, array('href' => $url_profile, 'class'=>'username' ));        
-	    	
-        echo "<p><span class='username'>$url_profile:</span> <span class='ticket-question'>$ticket->question</span></p><br />";       
 	
-	echo "<div>";
+	    	
+	?>
+	<p style="margin-top: -13px">
+		<div><?php  echo get_string('priority', 'block_helpdesk').": ".$priorities[$ticket->priority];?>
+
+		</div>
+		<span class='username'><?php echo $url_profile?>:</span> <span class='ticket-question'><?php echo $ticket->question?></span>
+	</p>
+	<br />
+
+	<div style="margin-left: 94px;">
+
+	<?php
 	if ( count($answers) ) {
 		echo "<h4>Respuestas</h4>";
-		echo "<ul>";
+		echo "<ul style='margin-left: 0px'>";
 		foreach ($answers as $a) {
 	
 			$userObj = $DB->get_record('user', array('id'=> $a->userid));
@@ -172,54 +194,21 @@ echo $OUTPUT->header();
 	
 	?>
 	
-	<h4>Seleccione la Acción a Realizar</h4>
-
-	<script type="text/javascript">
-		var Helpdesk = {
-			/**
-			* @param flags List of Booleans
-			**/
-			flags : {},
-
-			/**
-			* @function toggle show or hides an element
-			**/
-			toggle: function(elementId) {
-				if (!this.flags.hasOwnProperty(elementId) ) {
-					this.flags[elementId] = true;
-				}
-				if (this.flags[elementId]) {
-					document.getElementById(elementId).style.display='block';
-				} else {
-					document.getElementById(elementId).style.display='none';
-				}
-				this.flags[elementId] = !this.flags[elementId];
-				return this.flags[elementId];
-			}
-			
-		};
-	
-		
-		
-	</script>
+	<h4><?php echo get_string('request_action', 'block_helpdesk');?></h4>
 
         <form method="post" action="ticket_answer.php?ticketid=<?php echo $tt; ?>" name="answerform">            
             <input type="hidden" value="<?php echo $tt; ?>" name="ticketid"></input>
 	    <?php if ( $mensajeError ) echo "<div class='error'>$mensajeError</div>"?>
 
-	    <div  style="float: left;width: 34%;">
-		<h4><a href="#escribir_respuesta" onclick="Helpdesk.toggle('escribir_respuesta'); return false;">Responder</a></h4>
-		<div id="escribir_respuesta" style="display:none; background: #fff;">
-	            	<textarea cols="80" rows="8" name="ticket_answer"></textarea>
-		</div>
+	    <div>
+		<label>Responder</label><br />
+            	<textarea cols="80" rows="8" name="ticket_answer" width="25%"></textarea>
 	   </div>
 		
 	    <?php if (has_capability('block/helpdesk:admin', $context)) { ?>
-	    <div style="float: left;width: 33%;">
-		<h4><a href="#mostrar_estado" onclick="Helpdesk.toggle('mostrar_estado'); return false;">Modificar Estado</a></h4>
-		    <div id="mostrar_estado" style="display: none; background: #fff;">
+	    <div style="float: left;width: 34%;">
+		<label>Modificar Estado</label><br />
 		    <?php
-
 			if ( has_capability('block/helpdesk:admin', $context) ) {
 				foreach ($states as $s) {
 					$checked = '';
@@ -229,15 +218,36 @@ echo $OUTPUT->header();
 					echo "		<input type='radio' name='stateid' value='$s->id' $checked>$s->name<br>";
 		    	 	}
 			 }
-		    ?></div>
+		    ?>
 	    </div>
 	    <?php } ?>
+
+	
+	    <?php if (has_capability('block/helpdesk:admin', $context)) { ?>
+	    <div style="float: left;width: 33%;">
+		<label>Modificar Prioridad</label>
+		    <select name="priority">
+		    <?php
+			if ( has_capability('block/helpdesk:admin', $context) ) {
+				foreach ( $priorities as $k=>$p ) {
+					$selected = '';
+					if ( $ticket->priority == $k ) {
+						$selected = 'selected="selected"';
+					}
+					echo "<option value='$k' $selected>$p</option>";
+				}
+			 }
+		    ?></select>
+		    
+	    </div>
+	    <?php } ?>
+
 	    
 
   	    <?php if (has_capability('block/helpdesk:admin', $context)) { ?>
 	    <div style="float: right;width: 33%;">
-		<h4><a href="#mostrar_tipo" onclick="Helpdesk.toggle('mostrar_tipo'); return false;">Modificar Asignación</a></h4>
-		<div id="mostrar_tipo" style="display: none;background: #fff;">
+		<label>Asignar responsable</label>
+
 	    <?php
 		$users = get_users_by_capability($context, 'block/helpdesk:admin');
 
@@ -252,7 +262,6 @@ echo $OUTPUT->header();
 			}
 		echo "</select>";
 	    ?>
-	    	</div>
 	    </div>
 	    <?php } ?>
 	    

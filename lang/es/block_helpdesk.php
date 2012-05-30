@@ -38,3 +38,7 @@ $string['advanced_filters'] = 'Filtros para búsqueda avanzada';
 $string['tickets_founded'] = 'tickets encontrados';
 
 $string['priority'] = 'prioridad';
+
+
+$string['request_action'] = 'Seleccione la Acción a Realizar';
+

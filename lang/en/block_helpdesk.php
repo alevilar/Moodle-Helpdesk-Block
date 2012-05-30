@@ -40,6 +40,9 @@ $string['tickets_founded'] = 'tickets founded';
 
 $string['priority'] = 'priority';
 
+$string['request_action'] = 'Select an action';
+
+
 	
 
 

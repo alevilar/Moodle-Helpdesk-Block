@@ -23,12 +23,12 @@
     filter: dropshadow(color=#393B0B, offx=1, offy=1);
     width: 80px;
     float: left;
-	margin-right: 5px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
-	color: #fff;
-	text-transform: uppercase;
-	text-align: center;
+    margin-right: 5px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
 }
 
 
@@ -102,11 +102,10 @@ text-align: center;
 
 #ticket_index .responder{
 	float: right;
-	width: 10px;
-	height: 48px;
-	text-indent: -100px;
-	background: url(../blocks/helpdesk/pix/RightArrow.png) no-repeat;
+	padding: 10px;
+	background: grey;
 	overflow: hidden;
+	color: #fff;
 }
 
 #ticket_index .responder:hover{
