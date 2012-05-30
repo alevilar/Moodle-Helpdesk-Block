@@ -14,16 +14,16 @@
 
 
     $string['Open'] = 'Abrir';
-    $string['Closed Resolved'] = 'Cerrado Resuelto';
-    $string['Closed Duplicated'] = 'Cerrado Duplicado';
-    $string['Closed Invalid'] = 'Cerrado Inválido';
-    $string['Comment'] = 'Comemtario';
+    $string['Closed Resolved'] = 'Cerrado resuelto';
+    $string['Closed Duplicated'] = 'Cerrado duplicado';
+    $string['Closed Invalid'] = 'Cerrado inválido';
+    $string['Comment'] = 'Comentario';
     $string['State Change'] = 'Cambio de estado';
     $string['Assignament Changed'] = 'Cambió de persona asignada';
 
 
-    $string['open_new_ticket'] = 'Abrir Nuevo Ticket';
-    $string['open_new_ticket_form_description'] = 'A continuación puede ingresar su inquietud que ser atendida por un administrador del sistema.';
+    $string['open_new_ticket'] = 'Abrir nuevo ticket';
+    $string['open_new_ticket_form_description'] = 'En el formulario a continuación ingresar su inquietud, por favor incluir todos los detalles:';
 
     $string['error_save_to_db'] = 'Error al guardar, por favor intente nuevamente.';
 
@@ -38,7 +38,6 @@ $string['advanced_filters'] = 'Filtros para búsqueda avanzada';
 $string['tickets_founded'] = 'tickets encontrados';
 
 $string['priority'] = 'prioridad';
-
-
+$string['priority_ask'] = 'Ingrese la prioridad de la consulta';
+$string['ticket_added'] = 'Gracias por su consulta, pronto recibirá una respuesta';
 $string['request_action'] = 'Acciones';
-

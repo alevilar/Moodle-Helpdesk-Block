@@ -31,12 +31,12 @@ echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
 
 <?php echo get_string('open_new_ticket_form_description', 'block_helpdesk');?>
 
-
+<br>
 <form method="post" action="ticket_add_process.php">
     <textarea cols="80" rows="8" name="ticket_question"></textarea>
 
 	<br />
-    <?php echo get_string('priority', 'block_helpdesk')?>: 
+    <?php echo get_string('priority_ask', 'block_helpdesk')?>: 
     <select name="priority">
 	<?php 
 		$first = true;

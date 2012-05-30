@@ -23,7 +23,7 @@
 
 
     $string['open_new_ticket'] = 'Open New Ticket';
-    $string['open_new_ticket_form_description'] = 'A continuación puede ingresar su inquietud que ser atendida por un administrador del sistema.';
+    $string['open_new_ticket_form_description'] = 'Enter your question here';
 
 
     $string['error_save_to_db'] = 'Error on save form, please try again';
@@ -39,12 +39,7 @@ $string['advanced_filters'] = 'Advanced Filters';
 $string['tickets_founded'] = 'tickets founded';
 
 $string['priority'] = 'priority';
-
+$string['priority_ask'] = 'Enter priority';
+$string['ticket_added'] = 'Thank you for your question';
 $string['request_action'] = 'Select an action';
-
-
-	
-
-
-
 
