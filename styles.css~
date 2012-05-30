@@ -96,13 +96,13 @@ text-align: center;
 
 
 #ticket_index tr:hover{
-	background: #F7F7F7;
+	background: #F5F5F5;
 }
 
 
 #ticket_index .responder{
 	float: right;
-	width: 48px;
+	width: 10px;
 	height: 48px;
 	text-indent: -100px;
 	background: url(../blocks/helpdesk/pix/RightArrow.png) no-repeat;
