@@ -86,14 +86,14 @@ echo $OUTPUT->header();
 				$oldOwnerObj = $DB->get_record('user', array('id'=> $ticket->ownerid));
 				$oldOwnerObjName = $oldOwnerObj->username;	
 				if ( $_POST['ownerid'] != $USER->id) {					
-					$record->text = "Asignó a <a href='$CFG->wwwroot/user/profile.php?id=$newOwnerObj->id' target='_blank'>$newOwnerObjName</a> como responsable de este ticket" ;
+					$record->text = sprintf(get_string('user_assigned_change', 'block_helpdesk') , "<a href='$CFG->wwwroot/user/profile.php?id=$newOwnerObj->id' target='_blank'>$newOwnerObjName</a>");
 				} else {
 					$record->text = "Se designó como responsable de este ticket" ;
 				}								
 				
 				$record->ownerid = $_POST['ownerid'];
 			} else {
-				$record->text = "Asignó a <a href='$CFG->wwwroot/user/profile.php?id=$newOwnerObj->id' target='_blank'>$newOwnerObjName</a> como responsable de este ticket";
+				$record->text = sprintf(get_string('user_assigned_change', 'block_helpdesk') , "<a href='$CFG->wwwroot/user/profile.php?id=$newOwnerObj->id' target='_blank'>$newOwnerObjName</a>");
 
 				$record->ownerid = $_POST['ownerid'];
 			}

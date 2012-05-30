@@ -232,7 +232,7 @@ if (!empty($notificationerror)) {
       	        $url_profile = new moodle_url("/user/profile.php?id=".$t->authorid);
 	        $url_profile = html_writer::tag('a',  $userObj->username, array('href' => $url_profile, 'class'=>'username' )); 
 	    } else {
-		$url_profile = 'sin asignar';
+		$url_profile = get_string('no_assigned', 'block_helpdesk');
 	    }
 	    echo "<td>$url_profile</td>";
 
