@@ -3,7 +3,7 @@
     $string['helpdesk'] = 'Mesa de Ayuda';
     $string['helpdesk:admin'] = 'Administrar el bloque Mesa de Ayuda';
     $string['helpdesk:createticket'] = 'Realizar Consulta';
-    $string['nuevoticket'] = 'Nueva Consulta';
+    $string['nuevoticket'] = 'Enviar nueva consulta';
     $string['adminticket'] = 'Ver Consultas';
     $string['answer'] = 'respuesta';
     $string['answers'] = 'respuestas';

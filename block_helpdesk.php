@@ -64,11 +64,15 @@ class block_helpdesk extends block_base {
                 $this->content->text .= '<li>'.$urlTicketAdd."</li>";
         
 		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php?unassigned=on&stateid='.STATE_OPEN);
-		$urlTicketAdd = html_writer::tag('a',  'Pendientes Sin Asignar', array('href' => $urlTicketAdd ));        
+		$urlTicketAdd = html_writer::tag('a',  'Ver pendientes sin asignar', array('href' => $urlTicketAdd ));        
 		$this->content->text .= "<li>".$urlTicketAdd."</li>";
 
 		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
-		$urlTicketAdd = html_writer::tag('a',  'Listado de Tickets', array('href' => $urlTicketAdd ));        
+		$urlTicketAdd = html_writer::tag('a',  'Ver mis tickets', array('href' => $urlTicketAdd ));        
+		$this->content->text .= "<li>".$urlTicketAdd."</li>";
+
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
+		$urlTicketAdd = html_writer::tag('a',  'Ver todos los tickets', array('href' => $urlTicketAdd ));        
 		$this->content->text .= '<li>'.$urlTicketAdd."</li>";		
 
 		$this->content->text .= '</ul>';
