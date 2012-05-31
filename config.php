@@ -18,7 +18,14 @@ define('STATE_CLOSED_INVALID',4);
 define('CHANGE_TYPE_COMMENT',1);
 define('CHANGE_TYPE_STATE_CHANGE',2);
 define('CHANGE_TYPE_REASSIGNAMENT',3);
+define('CHANGE_TYPE_PRIORITY',4);
 
+
+/**
+*	Priority Table
+*
+* 	List of availiable priorities
+**/
 // first is default
 $priorities = array(
     1 => 'Normal',

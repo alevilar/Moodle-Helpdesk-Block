@@ -39,5 +39,9 @@ function xmldb_block_helpdesk_install () {
         $record->name   = 'Assignament Changed';
         $lastinsertid = $DB->insert_record('block_helpdesk_change_types', $record, $returnId = true);
 
+	$record = new stdClass();	
+        $record->name   = 'Priority Changed';
+        $lastinsertid = $DB->insert_record('block_helpdesk_change_types', $record, $returnId = true);
+
 	
 }

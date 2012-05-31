@@ -83,6 +83,13 @@ if (!empty($notificationerror)) {
     }
 
 
+    $prioritySelected = '';
+    if ( !empty($_GET) && isset($_GET['priority']) && is_numeric($_GET['priority'])) {
+	 $prioritySelected = $_GET['priority'];
+	 $where[] = "t.priority = $prioritySelected";
+    }
+
+
     $field_text = 't.*, s.name as status ';
     foreach ($fields as $f){
 	$field_text .= ", $f";
@@ -98,7 +105,7 @@ if (!empty($notificationerror)) {
 	$where_text .= " AND $w";
     }
 
-    $order_by = "ORDER by t.priority DESC, t.created ASC";
+    $order_by = "ORDER by t.created ASC";
 
     $limit_text = " LIMIT $limit";
         
@@ -153,7 +160,7 @@ if (!empty($notificationerror)) {
 			<label style="padding-left: 34px;"><?php echo get_string('Author','block_helpdesk')?></label><input type='text' name='authorname' value='<?php echo $authorSelected?>'/>
 			
 			<label><?php echo get_string('State','block_helpdesk')?></label>
-				<select type='text' name='stateid'/>
+				<select type='text' name='stateid'/ style="width: 200px;">
 					<option value='0'>Todos</option>
 					<?php
 						$states = $DB->get_records('block_helpdesk_states');
@@ -175,6 +182,21 @@ if (!empty($notificationerror)) {
 
 			<label><?php echo get_string('Unassigned','block_helpdesk')?></label><input type='checkbox' name='unassigned'  <?php echo $unassignedSelected?'checked':''; ?>/>
 
+
+			<label><?php echo get_string('priority','block_helpdesk')?></label>
+			<select name="priority">
+				echo "<option value=''>Todos</option>";
+				<?php 				
+					foreach ( $priorities as $k=>$p ) {
+						$markSelected = '';
+						if ( is_numeric($prioritySelected) && $prioritySelected == $k ) {
+							$markSelected =  'selected="selected"';
+						}
+						echo "<option value='$k' $markSelected>$p</option>";
+					}
+				?>
+			</select>
+
 			
 
 			<br />
@@ -194,8 +216,9 @@ if (!empty($notificationerror)) {
 	echo "<table id='ticket_index'><tr><th>&nbsp;</th><th>".get_string('priority', 'block_helpdesk')."</th><th>".get_string('date')."</th><th>".get_string('Author', 'block_helpdesk')."</th><th>".get_string('Owner', 'block_helpdesk')."</th><th>".get_string('description')."</th><th >&nbsp;</th></tr>";	
 
         echo "<tr class='tickets-list'>";
-        foreach ($tickets as $t) {      
-	  echo "<tr>";    
+        foreach ($tickets as $t) {   
+		$urlTo = "ticket_answer?ticketid=$t->id";   
+	  echo "<tr onclick='window.location = \"$urlTo\"'>";    
     	    echo "<td><div class='state-$t->stateid'>$t->status</div></td>";  
 	    echo "<td>".$priorities[$t->priority]."</td>";
             echo "<td>".date('Y-m-d H:i', $t->created)."</td>";
@@ -207,10 +230,10 @@ if (!empty($notificationerror)) {
 	
 	    if ( $t->ownerid ) {
 	        $userObj = $DB->get_record('user', array('id'=>$t->ownerid));
-      	        $url_profile = new moodle_url("/user/profile.php?id=".$t->authorid);
+      	        $url_profile = new moodle_url("/user/profile.php?id=".$t->ownerid);
 	        $url_profile = html_writer::tag('a',  $userObj->username, array('href' => $url_profile, 'class'=>'username' )); 
 	    } else {
-		$url_profile = 'sin asignar';
+		$url_profile = get_string('no_assigned', 'block_helpdesk');
 	    }
 	    echo "<td>$url_profile</td>";
 
@@ -268,8 +291,7 @@ if (!empty($notificationerror)) {
 				
 		if ($pags-1) {
 			echo " - ";
-		}
-			
+		}			
 		
 		$class_put = '';
 		if ($offset_pag == $offset) {
