@@ -21,8 +21,7 @@
     padding: 2px 4px;
     text-shadow: 1px 1px 2px #393B0B;
     filter: dropshadow(color=#393B0B, offx=1, offy=1);
-    width: 80px;
-    float: left;
+   
     margin-right: 5px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
@@ -39,8 +38,7 @@
     padding: 2px 4px;
     text-shadow: 1px 1px 2px #ad9b25;
     filter: dropshadow(color=#ad9b25, offx=1, offy=1);
-    width: 80px;
-    float: left;
+
 margin-right: 5px;
 -webkit-border-radius: 10px;
 border-radius: 10px;
@@ -57,9 +55,7 @@ text-align: center;
         filter: dropshadow(color=#FFFF8D, offx=1, offy=1);
         
     font-size: 12px;
-    padding: 2px 4px;        
-    width: 80px;
-    float: left;
+    padding: 2px 4px;    
     color: #474700;
     margin-right: 5px;
 -webkit-border-radius: 10px;
@@ -77,9 +73,7 @@ text-align: center;
         filter: dropshadow(color=#FFFF8D, offx=1, offy=1);
         
     font-size: 12px;
-    padding: 2px 4px;        
-    width: 80px;
-    float: left;
+    padding: 2px 4px;            
     color: #474700;
     margin-right: 5px;
 -webkit-border-radius: 10px;
@@ -94,6 +88,10 @@ text-align: center;
 	font-size: 10px;
 }
 
+
+#ticket_index tr{
+	cursor:pointer;cursor:hand
+}
 
 #ticket_index tr:hover{
 	background: #FCFCFC;
@@ -157,4 +155,38 @@ ul.changes .date{
 .error{
 	color: red;
 	font-weight: bolder;
+}
+
+.priority-2 span.priority{
+	font-weight: bolder;
+}
+
+.priority-block{	
+	background: grey;
+	color: white;
+	padding: 0px 20px;
+	clear: both;
+	margin-bottom: 10px;
+}
+
+#helpdesk-sidebar{
+	float: left;
+	width: 150px;
+	margin-right: 10px;
+}
+
+p.question{
+	width: 440px;
+	margin-left: 95px;
+	float: left;
+	text-align: center;
+}
+
+
+.helpdesk-answers .username{
+	font-style: italic;
+}
+
+.helpdesk-answers .answers{
+	margin-left: 88px;
 }

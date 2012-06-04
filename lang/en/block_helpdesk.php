@@ -55,3 +55,5 @@ $string['priority_changed'] = 'Priority changed from "%s" to "%s"';
 $string['write_response'] = 'Please, write an answer';
 $string['state_changed'] = 'The state has changed from "%s" to "%s".' ;
 
+$string['question'] = 'Question' ;
+

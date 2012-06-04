@@ -161,7 +161,7 @@ echo $OUTPUT->header();
 	    
 		// show error message on empty form submit
 		if ( empty($record->text) ) {
-		    $mensajeError = get_strin('write_response', 'block_helpdesk');
+		    $mensajeError = get_string('write_response', 'block_helpdesk');
 		}
 
 		// get updated $ticket data
@@ -169,8 +169,21 @@ echo $OUTPUT->header();
 	}
         
 
-	echo "<div class='state-$ticket->stateid'>$ticket->state</div>";
-        
+	?>
+	<div id="helpdesk-sidebar">
+		<div class="priority-block priority-<?php echo $ticket->priority ?>">
+			<span class="label"><?php  echo get_string('priority', 'block_helpdesk')?>:</span>
+			<span class="priority"><?php echo $priorities[$ticket->priority];?></span>
+		</div>
+
+	<?php
+		echo "<div class='state-$ticket->stateid'>$ticket->state</div>";	
+	?>
+		
+	</div>
+
+	<?php        
+
         $answers = $DB->get_records('block_helpdesk_changes', array('ticketid'=>$tt));
 
 	$userObj = $DB->get_record('user', array('id'=> $ticket->authorid));
@@ -179,21 +192,17 @@ echo $OUTPUT->header();
 	
 	    	
 	?>
-	<p style="margin-top: -13px">
-		<div style="float: right" class="priority-<?php echo $ticket->priority ?>">
-			<span><?php  echo get_string('priority', 'block_helpdesk')?>:</span>
-			<?php echo $priorities[$ticket->priority];?>
-		</div>
-		<span class='username'><?php echo $url_profile?>:</span> <span class='ticket-question'><?php echo $ticket->question?></span>
+	<p class="question"><h4><?php echo get_string('question', 'block_helpdesk')?></h4>
+			<span class='username'><?php echo $url_profile?>:</span> 
+			<span class='ticket-question'><?php echo $ticket->question?></span>	
 	</p>
-	<br />
 
-	<div style="margin-left: 94px;">
+	<div style="margin-left: 94px; margin-top: 20px;">
 
 	<?php
 	if ( count($answers) ) {
 		echo "<h4>Respuestas</h4>";
-		echo "<ul class='changes' style='margin-left: 0px'>";
+		echo "<ul class='changes helpdesk-answers'  style='margin-left: 0px'>";
 		foreach ($answers as $a) {
 	
 			$userObj = $DB->get_record('user', array('id'=> $a->userid));
@@ -201,9 +210,9 @@ echo $OUTPUT->header();
 			$url_profile = html_writer::tag('a',  $userObj->username, array('href' => $url_profile, 'class'=>'username' ));        
 		    	$date =  ' ' . date('d/m/Y H:i',$a->created);
 
-			$responsss = ($a->changetypeid == CHANGE_TYPE_COMMENT)? get_string('responds', 'block_helpdesk').':<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;':': ';
+			$responsss = ($a->changetypeid == CHANGE_TYPE_COMMENT)? get_string('responds', 'block_helpdesk').':<br>':': ';
 			
-		    	echo "<li class='changetype-id-$a->changetypeid'><span class='date'>$date</span><span class='username'> $url_profile $responsss<span class='answers'>$a->text<span></li>";
+		    	echo "<li class='changetype-id-$a->changetypeid'><span class='date'>$date</span><span class='username'> $url_profile $responsss<span class='answers'>$a->text</span></li>";
 		}
 		echo "</ul>";
 	}

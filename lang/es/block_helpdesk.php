@@ -53,4 +53,6 @@ $string['priority_changed'] = 'Se modificó la prioridad "%s" por "%s"';
 $string['write_response'] = "Al menos debe ingresar una respuesta";
 $string['state_changed'] = 'Modificó el estado de "%s" a "%s".';
 
+$string['question'] = 'Consulta' ;
+
 

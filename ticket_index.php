@@ -105,7 +105,7 @@ if (!empty($notificationerror)) {
 	$where_text .= " AND $w";
     }
 
-    $order_by = "ORDER by t.created ASC";
+    $order_by = "ORDER by t.created DESC";
 
     $limit_text = " LIMIT $limit";
         
