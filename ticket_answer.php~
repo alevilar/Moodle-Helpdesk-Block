@@ -212,7 +212,7 @@ echo $OUTPUT->header();
 
 			$responsss = ($a->changetypeid == CHANGE_TYPE_COMMENT)? get_string('responds', 'block_helpdesk').':<br>':': ';
 			
-		    	echo "<li class='changetype-id-$a->changetypeid'><span class='date'>$date</span><span class='username'> $url_profile $responsss<span class='answers'>$a->text</span></li>";
+		    	echo "<li class='changetype-id-$a->changetypeid'><span class='date'>$date</span><span class='username'> $url_profile $responsss</span><span class='answers'>$a->text</span></li>";
 		}
 		echo "</ul>";
 	}

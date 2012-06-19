@@ -192,10 +192,10 @@ echo $OUTPUT->header();
 	
 	    	
 	?>
-	<p class="question"><h4><?php echo get_string('question', 'block_helpdesk')?></h4>
+	<div class="question"><h4><?php echo get_string('question', 'block_helpdesk')?></h4>
 			<span class='username'><?php echo $url_profile?>:</span> 
 			<span class='ticket-question'><?php echo $ticket->question?></span>	
-	</p>
+	</div>
 
 	<div style="margin-left: 94px; margin-top: 20px;">
 

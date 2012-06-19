@@ -31,6 +31,11 @@ class block_helpdesk extends block_base {
         if ($courseid == SITEID) {
             $courseid = 0;
         }
+
+	if (empty($DB) || empty($PAGE)) {
+		return;
+	}
+
         if ($courseid) {
             $course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
             $PAGE->set_course($course);
