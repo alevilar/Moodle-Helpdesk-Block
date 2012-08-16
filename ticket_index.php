@@ -44,45 +44,82 @@ if (!empty($notificationerror)) {
 
     $sql = '';
     if ( !$es_admin && !empty($USER->id) ) {
-	   $fields = '%s';
-	   $join = '%s';
+	   $fields = ' %s ';
+	   $join = ' %s ';
 	   $where = " AND t.authorid = $USER->id %s ";
 	  $sql_base = sprintf($sql_base, $fields,  $join, $where) ;
     }
 
+    $stateidSelected = 0;
     if ( !empty($_GET) && !empty($_GET['stateid']) ) {
-	 //$fields = ", s.name as status %s";
-	// $join = "LEFT JOIN {block_helpdesk_states} s ON (s.id = t.stateid) %s "; 
-	 $aaaa = $_GET['stateid'];
-	 $where = " AND t.stateid =  $aaaa %s ";
+	 $fields = " %s ";
+	 $join = " %s "; 
+	 $stateidSelected = $_GET['stateid'];
+	 $where = " AND t.stateid =  $stateidSelected %s ";
 
-	$sql_base = sprintf($sql_base, "", "", $where) ;
+	$sql_base = sprintf($sql_base, $fields, $join, $where) ;
     }
 
-    $sql = sprintf($sql_base, "", "", "");
-    $tickets = $DB->get_records_sql($sql);
 
+    $ownerSelected = '';
+    if ( !empty($_GET) && !empty($_GET['ownername']) ) {
+	 $fields = ", o.username %s ";
+	 $join = "LEFT JOIN {user} o ON (o.id = t.ownerid) %s "; 
+	 $ownerSelected = $_GET['ownername'];
+	 $where = " AND o.username LIKE  '?$ownerSelected?' %s ";
+
+	$sql_base = sprintf($sql_base, $fields, $join, $where) ;
+    }
+
+
+    $authorSelected = '';
+    if ( !empty($_GET) && !empty($_GET['authorname']) ) {
+	 $fields = ", a.username %s";
+	 $join = "LEFT JOIN {user} a ON (a.id = t.authorid) %s "; 
+	 $authorSelected = $_GET['authorname'];
+	 $where = " AND a.username LIKE  '?$authorSelected?' %s ";
+
+	$sql_base = sprintf($sql_base, $fields, $join, $where) ;
+    }
     
+    $unassignedSelected = 0;
+    if ( !empty($_GET) && !empty($_GET['unassigned']) ) {
+	 $fields = "%s";
+	 $join = "%s";  
+	 $unassignedSelected = 1;
+	 $where = " AND t.ownerid IS NULL %s ";
+	$sql_base = sprintf($sql_base, $fields, $join, $where) ;
+    }
+
+
+    $sql = sprintf($sql_base, "", "", "");
+    $sql = strtr( $sql, '?', '%');
+
+    $tickets = $DB->get_records_sql($sql);
 
 
     echo "<h4>Filtros para búsqueda avanzada</h4>";
 ?>	
 	<p>
 	<form action="ticket_index.php" method='get'>
-		<label><?php echo get_string('Author','block_helpdesk')?></label><input type='text' name='authorname' />
-		<label><?php echo get_string('Owner','block_helpdesk')?></label><input type='text' name='ownername' />
+		<label><?php echo get_string('Author','block_helpdesk')?></label><input type='text' name='authorname' value='<?php echo $authorSelected?>'/>
+		<label><?php echo get_string('Owner','block_helpdesk')?></label><input type='text' name='ownername' value='<?php echo $ownerSelected?>' />
 		<br />
 
-		<label><?php echo get_string('Unassigned','block_helpdesk')?></label><input type='checkbox' name='unassigned' />
+		<label><?php echo get_string('Unassigned','block_helpdesk')?></label><input type='checkbox' name='unassigned'  <?php echo $unassignedSelected?'checked':''; ?>/>
 
 		<label><?php echo get_string('State','block_helpdesk')?></label>
 			<select type='text' name='stateid'/>
 				<option value='0'>Todos</option>
 				<?php
 					$states = $DB->get_records('block_helpdesk_states');
-					
+
 					foreach ($states as $s) {
-						echo "    <option value='$s->id'>$s->name</option>";
+						$checkeds = '';
+						if ($stateidSelected == $s->id) {
+							$checkeds = 'selected="selected"';
+						}
+						echo "    <option value='$s->id' $checkeds>$s->name</option>";
 					}
 				?>
 			</select>

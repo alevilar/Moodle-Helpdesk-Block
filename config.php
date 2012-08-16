@@ -1,10 +1,10 @@
 <?php
 
 // HACK TEMPORAL PARA DESARROLLAR YO: AleVilar
-//$config = '/var/www/moodle22/config.php';
+$config = '/var/www/moodle22/config.php';
 
 // este es el correcto
-$config = dirname(__FILE__) . '/../../config.php';
+//$config = dirname(__FILE__) . '/../../config.php';
 require_once($config);
 
 
