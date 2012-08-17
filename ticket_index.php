@@ -127,7 +127,7 @@
 
 		<label><?php echo get_string('State','block_helpdesk')?></label>
 			<select type='text' name='stateid'/>
-				<option value='0'>Todos</option>
+				<option value='0'><?php echo get_string('all');?></option>
 				<?php
 					$states = $DB->get_records('block_helpdesk_states');
 
