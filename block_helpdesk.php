@@ -24,7 +24,7 @@ class block_helpdesk extends block_base {
 
 
     function get_content() {
-
+        global $USER; 
         $courseid = optional_param('courseid', 0, PARAM_INTEGER);
         
         if ($courseid == SITEID) {
@@ -41,10 +41,10 @@ class block_helpdesk extends block_base {
         $this->content         =  new stdClass;
 
         $this->content->text = '';
-	$this->content->text .= '<h1>Soporte Técnico</h1><ul>';
+	$this->content->text .= '<h1>Obtener ayuda</h1><ul>';
         
 	$urlTicketAdd = new moodle_url('/mod/page/view.php?id=1');
-        $urlTicketAdd = html_writer::tag('a',  'Obtener ayuda', array('href' => $urlTicketAdd ));        
+        $urlTicketAdd = html_writer::tag('a',  '¿Cómo obtener ayuda?', array('href' => $urlTicketAdd ));        
         $this->content->text .= "<li>".$urlTicketAdd."</li>";
 
 	
@@ -62,16 +62,16 @@ class block_helpdesk extends block_base {
                 $urlTicketAdd = html_writer::tag('a',  get_string('nuevoticket', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
                 $this->content->text .= '<li>'.$urlTicketAdd."</li>";
         
-		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
-		$urlTicketAdd = html_writer::tag('a',  'Consultas Pendientes', array('href' => $urlTicketAdd ));        
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php?owner_id='.$USER->id);
+		$urlTicketAdd = html_writer::tag('a',   get_string('mytickets', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
 		$this->content->text .= "<li>".$urlTicketAdd."</li>";
 
-		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index_solved.php');
-		$urlTicketAdd = html_writer::tag('a',  'Histórico de Consultas', array('href' => $urlTicketAdd ));        
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
+		$urlTicketAdd = html_writer::tag('a',  get_string('alltickets', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
 		$this->content->text .= '<li>'.$urlTicketAdd."</li>";
 
-		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index_mypending.php');
-		$urlTicketAdd = html_writer::tag('a',  'Mis Soluciones Pendientes', array('href' => $urlTicketAdd ));        
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php?unassigned=1');
+		$urlTicketAdd = html_writer::tag('a',  get_string('pendingtickets', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
 		$this->content->text .= '<li>'.$urlTicketAdd."</li>";
 
 		$this->content->text .= '</ul>';

@@ -4,6 +4,11 @@
     $string['helpdesk:admin'] = 'Administrar el bloque Mesa de Ayuda';
     $string['helpdesk:createticket'] = 'Realizar Consulta';
     $string['nuevoticket'] = 'Nueva Consulta';
+    $string['mytickets'] = 'Ver mis tickets';
+    $string['alltickets'] = 'Ver todos los tickets';
+    $string['pendingtickets'] = 'Soluciones Pendientes';
+    
+    
     $string['adminticket'] = 'Ver Consultas';
     $string['answer'] = 'respuesta';
     $string['answers'] = 'respuestas';
@@ -31,3 +36,11 @@ $string['Author'] = 'Autor';
 $string['Owner'] = 'Designado';
 $string['Unassigned'] = 'Sin asignar';
 $string['State'] = 'Estado';
+
+$string['Tickets_Lists'] = 'Listado de Tickets';
+$string['Description'] = 'Descripción';
+$string['Date'] = 'Fecha';
+
+$string['filters_advanced'] = 'Filtros para búsqueda avanzada';
+
+

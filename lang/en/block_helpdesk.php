@@ -4,6 +4,10 @@
     $string['helpdesk:admin'] = 'Admin the help desk system';
     $string['helpdesk:createticket'] = 'Open or create a new ticket';
     $string['nuevoticket'] = 'New ticket';
+    $string['mytickets'] = 'Ver mis tickets';
+    $string['alltickets'] = 'Ver todos los tickets';
+    $string['pendingtickets'] = 'Soluciones Pendientes';
+    
     $string['adminticket'] = 'Admin tickets';
     $string['answer'] = 'answer';
     $string['answers'] = 'answers';
@@ -34,6 +38,10 @@ $string['Unassigned'] = 'Unassigned';
 $string['State'] = 'State';
 	
 
+$string['Tickets_Lists'] = 'Tickets List';
+$string['Description'] = 'Description';
+$string['Date'] = 'Date';
 
+$string['filters_advanced'] = 'Advanced search filters';
 
 

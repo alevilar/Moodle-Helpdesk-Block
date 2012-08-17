@@ -9,6 +9,7 @@ $context = get_context_instance(CONTEXT_SYSTEM);
 $PAGE->set_context($context);
 
 
+// verify if user is MANAGER
 $es_admin = false;
 if (has_capability('block/helpdesk:admin', $context)) {
 	$es_admin =  true;
@@ -37,12 +38,14 @@ if (!empty($notificationerror)) {
     $tickets = array();
     $state_init = STATE_OPEN;
 
-   $sql_base = "SELECT t.*, s.name as status %s FROM {block_helpdesk_tickets} t 
+    $sql_base = "SELECT t.*, s.name as status %s FROM {block_helpdesk_tickets} t 
 			LEFT JOIN {block_helpdesk_states} s ON (s.id = t.stateid) %s
 			WHERE 1=1 %s ORDER by t.created ASC";
 
 
     $sql = '';
+    
+    // Filter by AUTHOR_ID
     if ( !$es_admin && !empty($USER->id) ) {
 	   $fields = ' %s ';
 	   $join = ' %s ';
@@ -50,6 +53,7 @@ if (!empty($notificationerror)) {
 	  $sql_base = sprintf($sql_base, $fields,  $join, $where) ;
     }
 
+    // Filter by STATE_ID
     $stateidSelected = 0;
     if ( !empty($_GET) && !empty($_GET['stateid']) ) {
 	 $fields = " %s ";
@@ -60,7 +64,7 @@ if (!empty($notificationerror)) {
 	$sql_base = sprintf($sql_base, $fields, $join, $where) ;
     }
 
-
+    // Filter by OWNERNAME
     $ownerSelected = '';
     if ( !empty($_GET) && !empty($_GET['ownername']) ) {
 	 $fields = ", o.username %s ";
@@ -70,8 +74,20 @@ if (!empty($notificationerror)) {
 
 	$sql_base = sprintf($sql_base, $fields, $join, $where) ;
     }
+    
+    
+    // Filter by OWNER_ID
+    $ownerSelected = '';
+    if ( !empty($_GET) && !empty($_GET['owner_id']) ) {
+	 $fields = ", o.username %s ";
+	 $join = "LEFT JOIN {user} o ON (o.id = t.ownerid) %s "; 
+	 $ownerSelected = $_GET['owner_id'];
+	 $where = " AND t.ownerid = '$ownerSelected' %s ";
 
+	$sql_base = sprintf($sql_base, $fields, $join, $where) ;
+    }
 
+    // Filter by AUTHORNAME
     $authorSelected = '';
     if ( !empty($_GET) && !empty($_GET['authorname']) ) {
 	 $fields = ", a.username %s";
@@ -82,6 +98,7 @@ if (!empty($notificationerror)) {
 	$sql_base = sprintf($sql_base, $fields, $join, $where) ;
     }
     
+    // Filter by UNASSIGNED
     $unassignedSelected = 0;
     if ( !empty($_GET) && !empty($_GET['unassigned']) ) {
 	 $fields = "%s";
@@ -97,9 +114,9 @@ if (!empty($notificationerror)) {
 
     $tickets = $DB->get_records_sql($sql);
 
-
-    echo "<h4>Filtros para búsqueda avanzada</h4>";
 ?>	
+
+        <h4><?php echo get_string('filters_advanced','block_helpdesk')?></h4>";
 	<p>
 	<form action="ticket_index.php" method='get'>
 		<label><?php echo get_string('Author','block_helpdesk')?></label><input type='text' name='authorname' value='<?php echo $authorSelected?>'/>
@@ -129,12 +146,21 @@ if (!empty($notificationerror)) {
 
 	</form>
 	</p>
+        
+        
+        
+        <h3><?php echo get_string('Tickets_Lists','block_helpdesk');?></h3>
+        
+        <table style="width: 100%">
+            <tr>
+                <th><?php echo get_string('Date','block_helpdesk'); ?></th>
+                <th><?php echo get_string('Author','block_helpdesk');?></th>
+                <th><?php echo get_string('Owner','block_helpdesk');?></th>
+                <th><?php echo get_string('State','block_helpdesk');?></th>
+                <th><?php echo get_string('Description','block_helpdesk');?></th>
+            </tr>
 	<?php
-
-
-    echo "<h3>Lista de Tickets</h3>";
-    echo "<table><tr><th>Fecha</th><th>Autor</th><th>Owner</th><th>Estado</th><th>descripción</th><th>&nbsp;</th></tr>";	
-    
+        
     if (count($tickets)) {
         echo "<tr class='tickets-list'>";
         foreach ($tickets as $t) {      
@@ -152,7 +178,7 @@ if (!empty($notificationerror)) {
       	        $url_profile = new moodle_url("/user/profile.php?id=".$t->authorid);
 	        $url_profile = html_writer::tag('a',  $userObj->username, array('href' => $url_profile, 'class'=>'username' )); 
 	    } else {
-		$url_profile = 'sin asignar';
+		$url_profile = get_string('Unassigned', 'block_helpdesk');
 	    }
 	    echo "<td>$url_profile</td>";
 
