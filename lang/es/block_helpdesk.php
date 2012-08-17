@@ -5,6 +5,8 @@
     $string['helpdesk:createticket'] = 'Realizar Consulta';
     $string['nuevoticket'] = 'Nueva Consulta';
     $string['mytickets'] = 'Ver mis tickets';
+    $string['myassignedtickets'] = 'Ver tickets asignados';
+    
     $string['alltickets'] = 'Ver todos los tickets';
     $string['pendingtickets'] = 'Soluciones Pendientes';
     
@@ -38,6 +40,8 @@
     $string['State'] = 'Estado';
 
     $string['Tickets_Lists'] = 'Listado de Tickets';
+    $string['howtoobtainhelp'] =  '¿Cómo obtener ayuda?';
+    
     $string['Description'] = 'Descripción';
     $string['Date'] = 'Fecha';
 

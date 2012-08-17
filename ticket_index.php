@@ -1,35 +1,35 @@
 <?php
 
-require_once(dirname(__FILE__).'/config.php');
+    require_once(dirname(__FILE__).'/config.php');
 
-require_login();
-
-
-$context = get_context_instance(CONTEXT_SYSTEM);
-$PAGE->set_context($context);
+    require_login();
 
 
-// verify if user is MANAGER
-$es_admin = false;
-if (has_capability('block/helpdesk:admin', $context)) {
-	$es_admin =  true;
-}
-
- 
-$PAGE->set_url('/blocks/helpdesk/ticket_add.php');
-$PAGE->set_heading($SITE->fullname);
-$PAGE->set_pagelayout('frontpage');
-$PAGE->set_title(get_string('helpdesk', 'block_helpdesk'));
-$PAGE->navbar->add(get_string('helpdesk', 'block_helpdesk'));
+    $context = get_context_instance(CONTEXT_SYSTEM);
+    $PAGE->set_context($context);
 
 
-if (!empty($notificationerror)) {
-    echo $OUTPUT->header();
-    echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
-    echo $OUTPUT->notification($notificationerror);
-    echo $OUTPUT->footer();
-    die();
-}
+    // verify if user is MANAGER
+    $es_admin = false;
+    if (has_capability('block/helpdesk:admin', $context)) {
+            $es_admin =  true;
+    }
+
+
+    $PAGE->set_url('/blocks/helpdesk/ticket_add.php');
+    $PAGE->set_heading($SITE->fullname);
+    $PAGE->set_pagelayout('frontpage');
+    $PAGE->set_title(get_string('helpdesk', 'block_helpdesk'));
+    $PAGE->navbar->add(get_string('helpdesk', 'block_helpdesk'));
+
+
+    if (!empty($notificationerror)) {
+        echo $OUTPUT->header();
+        echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
+        echo $OUTPUT->notification($notificationerror);
+        echo $OUTPUT->footer();
+        die();
+    }
 
 
     echo $OUTPUT->header();
@@ -116,7 +116,7 @@ if (!empty($notificationerror)) {
 
 ?>	
 
-        <h4><?php echo get_string('filters_advanced','block_helpdesk')?></h4>";
+        <h4><?php echo get_string('filters_advanced','block_helpdesk')?></h4>
 	<p>
 	<form action="ticket_index.php" method='get'>
 		<label><?php echo get_string('Author','block_helpdesk')?></label><input type='text' name='authorname' value='<?php echo $authorSelected?>'/>
@@ -146,8 +146,6 @@ if (!empty($notificationerror)) {
 
 	</form>
 	</p>
-        
-        
         
         <h3><?php echo get_string('Tickets_Lists','block_helpdesk');?></h3>
         
@@ -195,4 +193,4 @@ if (!empty($notificationerror)) {
 
     echo "</table>";
 
-echo $OUTPUT->footer();
+    echo $OUTPUT->footer();

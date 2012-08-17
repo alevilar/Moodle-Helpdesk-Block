@@ -44,12 +44,12 @@ class block_helpdesk extends block_base {
 	$this->content->text .= '<h1>Obtener ayuda</h1><ul>';
         
 	$urlTicketAdd = new moodle_url('/mod/page/view.php?id=1');
-        $urlTicketAdd = html_writer::tag('a',  '¿Cómo obtener ayuda?', array('href' => $urlTicketAdd ));        
+        $urlTicketAdd = html_writer::tag('a', get_string('howtoobtainhelp', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
         $this->content->text .= "<li>".$urlTicketAdd."</li>";
 
 	
 	$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
-	$urlTicketAdd = html_writer::tag('a',  'Listado de Tickets', array('href' => $urlTicketAdd ));        
+	$urlTicketAdd = html_writer::tag('a',  get_string('Tickets_Lists', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
 	$this->content->text .= '<li>'.$urlTicketAdd."</li>";
 	
 
@@ -63,7 +63,7 @@ class block_helpdesk extends block_base {
                 $this->content->text .= '<li>'.$urlTicketAdd."</li>";
         
 		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php?owner_id='.$USER->id);
-		$urlTicketAdd = html_writer::tag('a',   get_string('mytickets', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
+		$urlTicketAdd = html_writer::tag('a',   get_string('myassignedtickets', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
 		$this->content->text .= "<li>".$urlTicketAdd."</li>";
 
 		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
