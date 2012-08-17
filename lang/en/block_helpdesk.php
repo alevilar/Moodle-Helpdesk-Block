@@ -32,16 +32,16 @@
 
     $string['error_save_to_db'] = 'Error on save form, please try again';
 
-$string['Author'] = 'Author';
-$string['Owner'] = 'Owner';
-$string['Unassigned'] = 'Unassigned';
-$string['State'] = 'State';
-	
+    $string['Author'] = 'Author';
+    $string['Owner'] = 'Owner';
+    $string['Unassigned'] = 'Unassigned';
+    $string['State'] = 'State';
 
-$string['Tickets_Lists'] = 'Tickets List';
-$string['Description'] = 'Description';
-$string['Date'] = 'Date';
 
-$string['filters_advanced'] = 'Advanced search filters';
+    $string['Tickets_Lists'] = 'Tickets List';
+    $string['Description'] = 'Description';
+    $string['Date'] = 'Date';
+
+    $string['filters_advanced'] = 'Advanced search filters';
 
 

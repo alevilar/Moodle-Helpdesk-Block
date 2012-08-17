@@ -32,15 +32,15 @@
 
     $string['error_save_to_db'] = 'Error al guardar, por favor intente nuevamente.';
 
-$string['Author'] = 'Autor';
-$string['Owner'] = 'Designado';
-$string['Unassigned'] = 'Sin asignar';
-$string['State'] = 'Estado';
+    $string['Author'] = 'Autor';
+    $string['Owner'] = 'Designado';
+    $string['Unassigned'] = 'Sin asignar';
+    $string['State'] = 'Estado';
 
-$string['Tickets_Lists'] = 'Listado de Tickets';
-$string['Description'] = 'Descripción';
-$string['Date'] = 'Fecha';
+    $string['Tickets_Lists'] = 'Listado de Tickets';
+    $string['Description'] = 'Descripción';
+    $string['Date'] = 'Fecha';
 
-$string['filters_advanced'] = 'Filtros para búsqueda avanzada';
+    $string['filters_advanced'] = 'Filtros para búsqueda avanzada';
 
 

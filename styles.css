@@ -23,11 +23,11 @@
     filter: dropshadow(color=#393B0B, offx=1, offy=1);
     width: 80px;
     float: left;
-margin-right: 5px;
--webkit-border-radius: 10px;
-border-radius: 10px;
-color: #fff;
-text-transform: uppercase;
+    margin-right: 5px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    color: #fff;
+    text-transform: uppercase;
 }
 
 
@@ -40,10 +40,10 @@ text-transform: uppercase;
     filter: dropshadow(color=#ad9b25, offx=1, offy=1);
     width: 80px;
     float: left;
-margin-right: 5px;
--webkit-border-radius: 10px;
-border-radius: 10px;
-text-transform: uppercase;
+    margin-right: 5px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
 }
 
 
@@ -60,9 +60,9 @@ text-transform: uppercase;
     float: left;
     color: #474700;
     margin-right: 5px;
--webkit-border-radius: 10px;
-border-radius: 10px;
-text-transform: uppercase;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
 }
 
 
@@ -79,9 +79,9 @@ text-transform: uppercase;
     float: left;
     color: #474700;
     margin-right: 5px;
--webkit-border-radius: 10px;
-border-radius: 10px;
-text-transform: uppercase;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
 }
 
 
