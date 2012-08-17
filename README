@@ -1,3 +1,5 @@
 Helpdesk Block es un bloque que agrega la posibilidad de enviar tickets mediante un simple formulario
 
 los administradores tendran la opcion de ver esos mensajes posteados y responderles.
+
+Para que se puedan asignar otros usuarios como posibles "designados" a un ticket se deberá modificar los permisos del bloque
