@@ -13,7 +13,7 @@
     $string['answer'] = 'answer';
     $string['answers'] = 'answers';
     $string['reply'] = 'reply';
-    $string['nothing_to_reply'] = 'there´s nothing to reply';
+    $string['nothing_to_reply'] = 'Nothing found';
     $string['view_solved'] = 'click to see solved tickets';
     $string['created_by'] = 'created by';
 
@@ -28,22 +28,53 @@
 
 
     $string['open_new_ticket'] = 'Open New Ticket';
-    $string['open_new_ticket_form_description'] = 'A continuación puede ingresar su inquietud que ser atendida por un administrador del sistema.';
+    $string['open_new_ticket_form_description'] = 'Enter your question here';
 
 
     $string['error_save_to_db'] = 'Error on save form, please try again';
 
+<<<<<<< HEAD
     $string['Author'] = 'Author';
     $string['Owner'] = 'Owner';
     $string['Unassigned'] = 'Unassigned';
     $string['State'] = 'State';
+=======
+$string['Author'] = 'Author';
+$string['Owner'] = 'Owner';
+$string['Unassigned'] = 'Unassigned';
+$string['State'] = 'State';
+>>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 
+$string['apply_filters'] = 'Apply Filters';
+$string['advanced_filters'] = 'Advanced Filters';
 
+<<<<<<< HEAD
     $string['Tickets_Lists'] = 'Tickets List';
     $string['howtoobtainhelp'] =  '¿How to obtain help?';
     $string['Description'] = 'Description';
     $string['Date'] = 'Date';
 
     $string['filters_advanced'] = 'Advanced search filters';
+=======
+$string['tickets_founded'] = 'tickets founded';
+>>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 
+$string['priority'] = 'priority';
+$string['priority_ask'] = 'Enter priority';
+$string['ticket_added'] = 'Thank you for your question';
+$string['request_action'] = 'Select an action';
+
+
+$string['no_assigned'] = 'No Assigned';
+
+
+$string['user_assigned_change'] = 'User %s has being assigned as responsable of this ticket';
+$string['user_autoassigned_change'] = "He auto-assigned as responsable of this ticket" ;
+$string['error_save'] = "Error saving, please try again.";
+$string['responds'] = 'responds';
+$string['priority_changed'] = 'Priority changed from "%s" to "%s"';
+$string['write_response'] = 'Please, write an answer';
+$string['state_changed'] = 'The state has changed from "%s" to "%s".' ;
+
+$string['question'] = 'Question' ;
 

@@ -1,4 +1,5 @@
 <?php
+require_once(dirname(__FILE__).'/config.php');
 
 /**
  * Form for editing HELPDESK block instances.
@@ -30,6 +31,11 @@ class block_helpdesk extends block_base {
         if ($courseid == SITEID) {
             $courseid = 0;
         }
+
+	if (empty($DB) || empty($PAGE)) {
+		return;
+	}
+
         if ($courseid) {
             $course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
             $PAGE->set_course($course);
@@ -62,6 +68,7 @@ class block_helpdesk extends block_base {
                 $urlTicketAdd = html_writer::tag('a',  get_string('nuevoticket', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
                 $this->content->text .= '<li>'.$urlTicketAdd."</li>";
         
+<<<<<<< HEAD
 		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php?owner_id='.$USER->id);
 		$urlTicketAdd = html_writer::tag('a',   get_string('myassignedtickets', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
 		$this->content->text .= "<li>".$urlTicketAdd."</li>";
@@ -73,6 +80,19 @@ class block_helpdesk extends block_base {
 		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php?unassigned=1');
 		$urlTicketAdd = html_writer::tag('a',  get_string('pendingtickets', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
 		$this->content->text .= '<li>'.$urlTicketAdd."</li>";
+=======
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php?unassigned=on&stateid='.STATE_OPEN);
+		$urlTicketAdd = html_writer::tag('a',  'Ver pendientes sin asignar', array('href' => $urlTicketAdd ));        
+		$this->content->text .= "<li>".$urlTicketAdd."</li>";
+
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
+		$urlTicketAdd = html_writer::tag('a',  'Ver mis tickets', array('href' => $urlTicketAdd ));        
+		$this->content->text .= "<li>".$urlTicketAdd."</li>";
+
+		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
+		$urlTicketAdd = html_writer::tag('a',  'Ver todos los tickets', array('href' => $urlTicketAdd ));        
+		$this->content->text .= '<li>'.$urlTicketAdd."</li>";		
+>>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 
 		$this->content->text .= '</ul>';
 	}

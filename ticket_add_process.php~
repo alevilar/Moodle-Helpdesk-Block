@@ -40,7 +40,7 @@ if (!empty($notificationerror)) {
 
         // si hubo error al guardar...
         if (!$lastinsertid) {
-            echo "Error al guardar, por favor intente nuevamente.";
+            echo get_string("error_save_to_db");
             echo $OUTPUT->footer();
             die;
         }
