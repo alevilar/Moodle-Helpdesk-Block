@@ -45,15 +45,7 @@ echo $OUTPUT->header();
 
 		$record->ticketid = $_POST['ticketid'];
 		$record->created  = time();
-<<<<<<< HEAD
 
-
-		// User has make a comment or response
-		if ( !empty($answ) ) {
-			$record->changetypeid = CHANGE_TYPE_COMMENT;
-
-			$record->text .= $answ ;
-=======
 
 
 		// User has make a comment or response
@@ -61,25 +53,21 @@ echo $OUTPUT->header();
 			$record->changetypeid = CHANGE_TYPE_COMMENT;
 
 			$record->text = $_POST['ticket_answer'] ;
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 			if ( !empty($record->text) ) {
 			    $lastinsertid = $DB->insert_record('block_helpdesk_changes', $record, $returnId = true);
 
 			    // si hubo error al guardar...
 			    if (!$lastinsertid) {
-<<<<<<< HEAD
-				echo "Error al guardar, por favor intente nuevamente.";
-=======
 				echo get_string('error_save', 'block_helpdesk');
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 				echo $OUTPUT->footer();
 				die;
 			    }
 			}
+                        
+                        // send email or moodle message
+                        send_msg_on_change($USER->id, $ticket->authorid, $ticket->id, $msg = $_POST['ticket_answer']);
 		}
 
-<<<<<<< HEAD
-=======
 
 
 		// User has change the priority
@@ -91,7 +79,7 @@ echo $OUTPUT->header();
 
 			$record->changetypeid = CHANGE_TYPE_PRIORITY;
 
-			$record->text = sprintf(get_string('priority_changed', 'block_helpdesk'), $priorities[$ticket->priority],$priorities[$_POST['priority']]);
+			$record->text = sprintf(get_string('priority_changed', 'block_helpdesk'), get_string( $priorities[$ticket->priority], 'block_helpdesk'), get_string( $priorities[$_POST['priority']], 'block_helpdesk' ));
 			if ( !empty($record->text) ) {
 			    $lastinsertid = $DB->insert_record('block_helpdesk_changes', $record, $returnId = true);
 
@@ -105,59 +93,49 @@ echo $OUTPUT->header();
 		}
 
 
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 		
-		// Owner change logic
-		if ( !empty($_POST['ownerid']) &&  $_POST['ownerid'] != $ticket->ownerid) {	
+		
+		
+                // Owner change logic
+                if ( !empty($_POST['ownerid']) &&  $_POST['ownerid'] != $ticket->ownerid) {	
 
-			$newOwnerObj = $DB->get_record('user', array('id'=> $_POST['ownerid']));
-			$newOwnerObjName = $newOwnerObj->username;
+                    $newOwnerObj = $DB->get_record('user', array('id'=> $_POST['ownerid']));
+                    $newOwnerObjName = $newOwnerObj->username;
 
-			if (!empty($ticket->ownerid)) {
-				$oldOwnerObj = $DB->get_record('user', array('id'=> $ticket->ownerid));
-<<<<<<< HEAD
-				$oldOwnerObjName = $oldOwnerObj->username;									
-				$record->text = "Se modificó la asignación de $oldOwnerObjName a $newOwnerObjName" ;
-				$record->ownerid = $_POST['ownerid'];
-			} else {
-				$record->text = "Se asignó a $newOwnerObjName" ;
-=======
-				$oldOwnerObjName = $oldOwnerObj->username;	
-				if ( $_POST['ownerid'] != $USER->id) {					
-					$record->text = sprintf(get_string('user_assigned_change', 'block_helpdesk') , "<a href='$CFG->wwwroot/user/profile.php?id=$newOwnerObj->id' target='_blank'>$newOwnerObjName</a>");
-				} else {
-					$record->text = get_string('user_autoassigned_change', 'block_helpdesk') ;
-				}								
-				
-				$record->ownerid = $_POST['ownerid'];
-			} else {
-				$record->text = sprintf(get_string('user_assigned_change', 'block_helpdesk') , "<a href='$CFG->wwwroot/user/profile.php?id=$newOwnerObj->id' target='_blank'>$newOwnerObjName</a>");
+                    if (!empty($ticket->ownerid)) {
+                            $oldOwnerObj = $DB->get_record('user', array('id'=> $ticket->ownerid));
+                            $oldOwnerObjName = $oldOwnerObj->username;	
+                            if ( $_POST['ownerid'] != $USER->id) {					
+                                    $record->text = sprintf(get_string('user_assigned_change', 'block_helpdesk') , "<a href='$CFG->wwwroot/user/profile.php?id=$newOwnerObj->id' target='_blank'>$newOwnerObjName</a>");
+                            } else {
+                                    $record->text = get_string('user_autoassigned_change', 'block_helpdesk') ;
+                            }								
 
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
-				$record->ownerid = $_POST['ownerid'];
-			}
+                            $record->ownerid = $_POST['ownerid'];
+                    } else {
+                            $record->text = sprintf(get_string('user_assigned_change', 'block_helpdesk') , "<a href='$CFG->wwwroot/user/profile.php?id=$newOwnerObj->id' target='_blank'>$newOwnerObjName</a>");
 
-			$recordTk = new stdClass();
-			$recordTk->ownerid =  $_POST['ownerid'];
-			$recordTk->id = $ticket->id;
-			$record->changetypeid = CHANGE_TYPE_REASSIGNAMENT;
-			$DB->update_record('block_helpdesk_tickets', $recordTk);
 
-			if ( !empty($record->text) ) {
-			    $lastinsertid = $DB->insert_record('block_helpdesk_changes', $record, $returnId = true);
+                            $record->ownerid = $_POST['ownerid'];
+                    }
 
-			    // si hubo error al guardar...
-			    if (!$lastinsertid) {
-<<<<<<< HEAD
-				echo "Error al guardar, por favor intente nuevamente.";
-=======
-				echo get_string('error_save', 'block_helpdesk');
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
-				echo $OUTPUT->footer();
-				die;
-			    }
-			}
-		}
+                    $recordTk = new stdClass();
+                    $recordTk->ownerid =  $_POST['ownerid'];
+                    $recordTk->id = $ticket->id;
+                    $record->changetypeid = CHANGE_TYPE_REASSIGNAMENT;
+                    $DB->update_record('block_helpdesk_tickets', $recordTk);
+
+                    if ( !empty($record->text) ) {
+                        $lastinsertid = $DB->insert_record('block_helpdesk_changes', $record, $returnId = true);
+
+                        // si hubo error al guardar...
+                        if (!$lastinsertid) {
+                            echo get_string('error_save', 'block_helpdesk');
+                            echo $OUTPUT->footer();
+                            die;
+                        }
+                    }
+            }
 
 
 		// State change Logic
@@ -165,11 +143,7 @@ echo $OUTPUT->header();
 			$oldStateObj = $DB->get_record('block_helpdesk_states', array('id'=> $ticket->stateid));
 			$newStateObj = $DB->get_record('block_helpdesk_states', array('id'=> $_POST['stateid']));
 			
-<<<<<<< HEAD
-			$record->text = "Se modificó el estado de $oldStateObj->name a $newStateObj->name." ;			
-=======
 			$record->text = sprintf(get_string('state_changed', 'block_helpdesk'), $oldStateObj->name, $newStateObj->name );			
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 			$record->changetypeid = CHANGE_TYPE_STATE_CHANGE;
 
 			$recordTk = new stdClass();
@@ -182,29 +156,17 @@ echo $OUTPUT->header();
 
 			    // si hubo error al guardar...
 			    if (!$lastinsertid) {
-<<<<<<< HEAD
-				echo "Error al guardar, por favor intente nuevamente.";
-=======
 				echo get_string('error_save', 'block_helpdesk');
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 				echo $OUTPUT->footer();
 				die;
 			    }
 			}
 		}
-			
-		// send email or moodle message
-		send_msg_on_change($USER->id, $ticket->authorid, $ticket->id);
+					
 	    
-<<<<<<< HEAD
-		// on empty form submit
-		if ( empty($record->text) ) {
-		    $mensajeError = "Debe ingresar una respuesta";
-=======
 		// show error message on empty form submit
 		if ( empty($record->text) ) {
 		    $mensajeError = get_string('write_response', 'block_helpdesk');
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 		}
 
 		// get updated $ticket data
@@ -216,7 +178,7 @@ echo $OUTPUT->header();
 	<div id="helpdesk-sidebar">
 		<div class="priority-block priority-<?php echo $ticket->priority ?>">
 			<span class="label"><?php  echo get_string('priority', 'block_helpdesk')?>:</span>
-			<span class="priority"><?php echo $priorities[$ticket->priority];?></span>
+			<span class="priority"><?php echo get_string('priority_name_'.$priorities[$ticket->priority], 'block_helpdesk');?></span>
 		</div>
 
 	<?php
@@ -235,8 +197,9 @@ echo $OUTPUT->header();
 	
 	    	
 	?>
-	<div class="question"><h4><?php echo get_string('question', 'block_helpdesk')?></h4>
-			<span class='username'><?php echo $url_profile?>:</span> 
+        <h4><?php echo $ticket->subject?></h4>
+	<div class="question">
+                        <span class='username'><i><?php echo get_string('question_from', 'block_helpdesk')." ".$url_profile?>:</i></span> 
 			<span class='ticket-question'><?php echo $ticket->question?></span>	
 	</div>
 
@@ -244,7 +207,7 @@ echo $OUTPUT->header();
 
 	<?php
 	if ( count($answers) ) {
-		echo "<h4>Respuestas</h4>";
+		echo "<h4 style='text-transform:capitalize;'>". get_string('answers', 'block_helpdesk') ."</h4>";
 		echo "<ul class='changes helpdesk-answers'  style='margin-left: 0px'>";
 		foreach ($answers as $a) {
 	
@@ -264,71 +227,22 @@ echo $OUTPUT->header();
 	
 	?>
 	
-<<<<<<< HEAD
-	<h4>Acciones</h4>
 
-	<script type="text/javascript">
-		var Helpdesk = {
-			flag1 : true, 
-			flag2 : true,
-			flags : {},
-
-			toggle: function(elementId) {
-				if (!this.flags.hasOwnProperty(elementId) ) {
-					this.flags[elementId] = true;
-				}
-				if (this.flags[elementId]) {
-					document.getElementById(elementId).style.display='block';
-				} else {
-					document.getElementById(elementId).style.display='none';
-				}
-				this.flags[elementId] = !this.flags[elementId];
-				return this.flags[elementId];
-			},
-
-			changeVisibility1 : function() {
-				this.flag1 = this.toggle('mostrar_estado');
-
-			},
-
-			changeVisibility2 : function() {
-				this.flag2 = this.toggle('mostrar_tipo');
-			}
-			
-		};
-	
-		
-		
-	</script>
-=======
 	<h4><?php echo get_string('request_action', 'block_helpdesk');?></h4>
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 
         <form method="post" action="ticket_answer.php?ticketid=<?php echo $tt; ?>" name="answerform">            
             <input type="hidden" value="<?php echo $tt; ?>" name="ticketid"></input>
 	    <?php if ( $mensajeError ) echo "<div class='error'>$mensajeError</div>"?>
 
-<<<<<<< HEAD
-	    <div  style="float: left;width: 34%;">
-		<h4><a href="#escribir_respuesta" onclick="Helpdesk.toggle('escribir_respuesta'); return false;">Escribir Respuesta</a></h4>
-		<div id="escribir_respuesta" style="display:none; background: #fff;">
-	            	<textarea cols="80" rows="8" name="ticket_answer"></textarea>
-		</div>
-	   </div>
-		
-	    <div style="float: left;width: 33%;">
-		<h4><a href="#mostrar_estado" onclick="Helpdesk.changeVisibility1(); return false;">Modificar Estado</a></h4>
-		    <div id="mostrar_estado" style="display: none; background: #fff;">
-=======
+
 	    <div>
-		<label>Responder</label><br />
+		<label><?php echo ucfirst(get_string('answer', 'block_helpdesk'));?></label><br />
             	<textarea cols="80" rows="8" name="ticket_answer" width="25%"></textarea>
 	   </div>
 		
 	    <?php if (has_capability('block/helpdesk:admin', $context)) { ?>
 	    <div style="float: left;width: 34%;">
-		<label>Modificar Estado</label><br />
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
+		<label><?php echo ucfirst(get_string('label_state_change', 'block_helpdesk'));?></label><br />
 		    <?php
 			if ( has_capability('block/helpdesk:admin', $context) ) {
 				foreach ($states as $s) {
@@ -346,7 +260,7 @@ echo $OUTPUT->header();
 	
 	    <?php if (has_capability('block/helpdesk:admin', $context)) { ?>
 	    <div style="float: left;width: 33%;">
-		<label>Modificar Prioridad</label>
+		<label><?php echo get_string('label_priority_change', 'block_helpdesk')?></label>
 		    <select name="priority">
 		    <?php
 			if ( has_capability('block/helpdesk:admin', $context) ) {
@@ -355,31 +269,24 @@ echo $OUTPUT->header();
 					if ( $ticket->priority == $k ) {
 						$selected = 'selected="selected"';
 					}
-					echo "<option value='$k' $selected>$p</option>";
+					echo "<option value='$k' $selected>".get_string('priority_name_'.$p, 'block_helpdesk')."</option>";
 				}
 			 }
 		    ?></select>
-		    
 	    </div>
 	    <?php } ?>
 
 	    
 
-<<<<<<< HEAD
-	    <div style="float: right;width: 33%;">
-		<h4><a href="#mostrar_tipo" onclick="Helpdesk.changeVisibility2(); return false;">Modificar Asignación</a></h4>
-		<div id="mostrar_tipo" style="display: none;background: #fff;">
-=======
   	    <?php if (has_capability('block/helpdesk:admin', $context)) { ?>
 	    <div style="float: right;width: 33%;">
-		<label>Asignar responsable</label>
+		<label><?php echo get_string('label_owner_assignment', 'block_helpdesk')?></label>
 
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 	    <?php
 		$users = get_users_by_capability($context, 'block/helpdesk:admin');
 
 		echo "<select name='ownerid'>";
-			echo "<option value='0'>Sin Cambios</option>";
+			echo "<option value='0'>".get_string('no_changes', 'block_helpdesk')."</option>";
 			foreach ( $users as $u) {
 				$selectedActive = '';
 				if ($ticket->ownerid == $u->id ) {

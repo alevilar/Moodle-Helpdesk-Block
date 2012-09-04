@@ -40,7 +40,7 @@ $capabilities = array(
     'block/helpdesk:admin' => array(
 
         'captype' => 'write',
-        'contextlevel' => CONTEXT_BLOCK,
+        'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
             'guest'          => CAP_PREVENT,
             'student'        => CAP_PREVENT,

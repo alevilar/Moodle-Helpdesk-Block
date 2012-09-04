@@ -3,42 +3,40 @@
     $string['helpdesk'] = 'Mesa de Ayuda';
     $string['helpdesk:admin'] = 'Administrar el bloque Mesa de Ayuda';
     $string['helpdesk:createticket'] = 'Realizar Consulta';
-<<<<<<< HEAD
-    $string['nuevoticket'] = 'Nueva Consulta';
+    $string['nuevoticket'] = 'Enviar Nueva Consulta';
     $string['mytickets'] = 'Ver mis tickets';
-    $string['myassignedtickets'] = 'Ver tickets asignados';
+    $string['myassignedtickets'] = 'Ver mis tickets asignados';
+    $string['showingmyassignedtickets'] = 'Viendo mis tickets asignados';
+     
     
     $string['alltickets'] = 'Ver todos los tickets';
-    $string['pendingtickets'] = 'Soluciones Pendientes';
+    $string['pendingtickets'] = 'Pendientes sin Asignar';
     
     
-=======
-    $string['nuevoticket'] = 'Enviar nueva consulta';
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
     $string['adminticket'] = 'Ver Consultas';
     $string['answer'] = 'respuesta';
     $string['answers'] = 'respuestas';
     $string['reply'] = 'responder';
-    $string['nothing_to_reply'] = 'No se obtuvieron resultados';
+    $string['nothing_to_reply'] = 'No hay consultas pendientes';
     $string['view_solved'] = 'Ver consultas cerradas';
     $string['created_by'] = 'creada por';
 
 
     $string['Open'] = 'Abrir';
-    $string['Closed Resolved'] = 'Cerrado resuelto';
-    $string['Closed Duplicated'] = 'Cerrado duplicado';
-    $string['Closed Invalid'] = 'Cerrado inválido';
-    $string['Comment'] = 'Comentario';
-    $string['State Change'] = 'Cambio de estado';
+    $string['Closed Resolved'] = 'Cerrado Resuelto';
+    $string['Closed Duplicated'] = 'Cerrado Duplicado';
+    $string['Closed Invalid'] = 'Cerrado Inválido';
+    $string['Comment'] = 'Comemtario';
+    $string['state_change'] = 'Cambio de estado';
+    $string['label_state_change'] = 'Modificar estado';
     $string['Assignament Changed'] = 'Cambió de persona asignada';
 
 
-    $string['open_new_ticket'] = 'Abrir nuevo ticket';
-    $string['open_new_ticket_form_description'] = 'En el formulario a continuación ingresar su inquietud, por favor incluir todos los detalles:';
+    $string['open_new_ticket'] = 'Abrir Nuevo Ticket';
+    $string['open_new_ticket_form_description'] = 'A continuación puede ingresar su inquietud que ser atendida por un administrador del sistema.';
 
     $string['error_save_to_db'] = 'Error al guardar, por favor intente nuevamente.';
 
-<<<<<<< HEAD
     $string['Author'] = 'Autor';
     $string['Owner'] = 'Designado';
     $string['Unassigned'] = 'Sin asignar';
@@ -51,34 +49,49 @@
     $string['Date'] = 'Fecha';
 
     $string['filters_advanced'] = 'Filtros para búsqueda avanzada';
-=======
-$string['Author'] = 'Autor';
-$string['Owner'] = 'Designado';
-$string['Unassigned'] = 'Sin asignar';
-$string['State'] = 'Estado';
-
-$string['apply_filters'] = 'Aplicar los Filtros';
-$string['advanced_filters'] = 'Filtros para búsqueda avanzada';
-
-$string['tickets_founded'] = 'tickets encontrados';
-
-$string['priority'] = 'prioridad';
-$string['priority_ask'] = 'Ingrese la prioridad de la consulta';
-$string['ticket_added'] = 'Gracias por su consulta, pronto recibirá una respuesta';
-$string['request_action'] = 'Acciones';
 
 
-$string['no_assigned'] = 'sin asignar';
+    $string['Subject'] = 'Asunto';
+    $string['Question'] = 'Consulta';
+    
+    $string['apply_filters'] = 'Aplicar los Filtros';
+    $string['advanced_filters'] = 'Filtros para búsqueda avanzada';
 
-$string['user_assigned_change'] = 'Asignó a %s como responsable de este ticket';
-$string['user_autoassigned_change'] = "Se auto-designó como responsable de este ticket" ;
-$string['error_save'] = "Error al guardar, por favor intente nuevamente.";
-$string['responds'] = 'respondió';
-$string['priority_changed'] = 'Se modificó la prioridad "%s" por "%s"';
-$string['write_response'] = "Al menos debe ingresar una respuesta";
-$string['state_changed'] = 'Modificó el estado de "%s" a "%s".';
+    $string['tickets_founded'] = 'tickets encontrados';
 
-$string['question'] = 'Consulta' ;
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
+    $string['priority'] = 'prioridad';
+    $string['priority_ask'] = 'Ingrese la prioridad de la consulta';
+    $string['ticket_added'] = 'Gracias por su consulta, pronto recibirá una respuesta';
+    $string['request_action'] = 'Acciones';
+
+    $string['label_priority_change'] = 'Cambiar Prioridad';
+    $string['label_owner_assignment'] = 'Asignar Responsable';
 
 
+    $string['no_assigned'] = 'sin asignar';
+
+    $string['user_assigned_change'] = 'Asignó a %s como responsable de este ticket';
+    $string['user_autoassigned_change'] = "Se auto-designó como responsable de este ticket" ;
+    $string['error_save'] = "Error al guardar, por favor intente nuevamente.";
+    $string['responds'] = 'respondió';
+    $string['priority_changed'] = 'Se modificó la prioridad "%s" por "%s"';
+    $string['write_response'] = "Al menos debe ingresar una respuesta";
+    $string['state_changed'] = 'Modificó el estado de "%s" a "%s".';
+
+    $string['question'] = 'Consulta' ;
+    $string['question_from'] = 'Pregunta de';
+    
+    
+    $string['ticket_responde_msg'] = 'Se respondió a tu consulta en el sistema de tickets, para ver o responder el ticket [cliquear acá]';
+    
+//    $string['open'] = 'Open';
+//    $string['closed_resolved'] = 'Closed Resolved';
+//    $string['closed_duplicated'] = 'Closed Duplicated';
+//    $string['closed_invalid'] = 'Closed Invalid';
+        
+    
+    $string['priority_name_low'] = $string['low'] = 'Baja';
+    $string['priority_name_normal'] = $string['normal'] = 'Normal';
+    $string['priority_name_hight'] = $string['hight'] = 'Alta';
+    
+    $string['no_changes'] = 'Sin Cambios' ;

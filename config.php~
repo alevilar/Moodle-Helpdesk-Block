@@ -1,11 +1,8 @@
 <?php
 
-<<<<<<< HEAD
 // HACK TEMPORAL PARA DESARROLLAR YO: AleVilar
 //$config = '/var/www/moodle22/config.php';
 
-=======
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 // este es el correcto
 $config = dirname(__FILE__) . '/../../config.php';
 require_once($config);
@@ -24,20 +21,7 @@ define('STATE_CLOSED_INVALID',4);
 define('CHANGE_TYPE_COMMENT',1);
 define('CHANGE_TYPE_STATE_CHANGE',2);
 define('CHANGE_TYPE_REASSIGNAMENT',3);
-define('CHANGE_TYPE_REASSIGNAMENT',3);
 
-
-/**
-*	Priority Table
-*
-* 	List of availiable priorities
-**/
-// first is default
-$priorities = array(
-    1 => 'Normal',
-    0 => 'Low',   
-    2 => 'High',
-);
 /*         EOF: Statics Vars Definition     */
 
 
@@ -57,7 +41,7 @@ function send_msg_on_change ( $user_from_id, $user_to_id, $ticketid ) {
 
 	$urlTicketAdd = new moodle_url("/blocks/helpdesk/ticket_answer?ticketid=$ticketid");
 	$urlTicketAdd = html_writer::tag('a',  'Consultas Pendientes', array('href' => $urlTicketAdd ));   
-	$messageid = message_post_message($userFrom, $userTo, "Se respondio a tu consulta en el sistema de tickets, para ver la respusta [cliquear aca](/blocks/helpdesk/ticket_answer?ticketid=".$ticketid.")", FORMAT_MARKDOWN);
+	$messageid = message_post_message($userFrom, $userTo, "Te respondieron de la Mesa de Ayuda. Debes ir a Ayuda->Soporte Técnico->Mis Consultas", FORMAT_MOODLE);
 
 }
 

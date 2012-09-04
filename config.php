@@ -1,14 +1,17 @@
 <?php
 
-<<<<<<< HEAD
 // HACK TEMPORAL PARA DESARROLLAR YO: AleVilar
 $config = '/var/www/moodle22/config.php';
 
-=======
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 // este es el correcto
 //$config = dirname(__FILE__) . '/../../config.php';
 require_once($config);
+
+
+/**
+ * Ticket's limit in list, for pagination porpouse
+ */
+define('TICKET_INDEX_LIMIT',20);
 
 
 
@@ -26,18 +29,18 @@ define('CHANGE_TYPE_STATE_CHANGE',2);
 define('CHANGE_TYPE_REASSIGNAMENT',3);
 define('CHANGE_TYPE_PRIORITY',4);
 
-
 /**
 *	Priority Table
 *
 * 	List of availiable priorities
 **/
-// first is default
+// first is default, that's because array should begin with "NORMAL" priority
 $priorities = array(
-    1 => 'Normal',
-    0 => 'Low',   
-    2 => 'High',
+    1 => 'normal',
+    0 => 'low',   
+    2 => 'hight',
 );
+
 /*         EOF: Statics Vars Definition     */
 
 
@@ -50,14 +53,20 @@ $priorities = array(
 * @user_to_id ID of received user
 * @ticketid ID of the ticket
 */
-function send_msg_on_change ( $user_from_id, $user_to_id, $ticketid ) {
+function send_msg_on_change ( $user_from_id, $user_to_id, $ticketid, $msg ) {
 	global $DB;
 	$userFrom = $DB->get_record('user', array('id'=>$user_from_id));
 	$userTo = $DB->get_record('user', array('id'=>$user_to_id));
 
-	$urlTicketAdd = new moodle_url("/blocks/helpdesk/ticket_answer?ticketid=$ticketid");
-	$urlTicketAdd = html_writer::tag('a',  'Consultas Pendientes', array('href' => $urlTicketAdd ));   
-	$messageid = message_post_message($userFrom, $userTo, "Se respondio a tu consulta en el sistema de tickets, para ver la respusta [cliquear aca](/blocks/helpdesk/ticket_answer?ticketid=".$ticketid.")", FORMAT_MARKDOWN);
+	$urlTicketAdd = new moodle_url("/blocks/helpdesk/ticket_answer?ticketid=".$ticketid);
+//	$urlTicketAdd = html_writer::tag('a',  'Consultas Pendientes', array('href' => $urlTicketAdd ));   
+//	$messageid = message_post_message($userFrom, $userTo, "Te respondieron de la Mesa de Ayuda. Debes ir a Ayuda->Soporte Técnico->Mis Consultas", FORMAT_MOODLE);
+        $messageid = message_post_message($userFrom, $userTo, 
+        get_string('ticket_responde_msg', 'block_helpdesk') . "($urlTicketAdd)".'
+            
+        '.get_string('answer', 'block_helpdesk').': 
+            '.$msg, FORMAT_MARKDOWN);
+
 
 }
 

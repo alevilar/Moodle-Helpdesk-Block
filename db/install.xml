@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/helpdesk/db" VERSION="20120529" COMMENT="XMLDB file for Moodle blocks/community"
+<XMLDB PATH="blocks/helpdesk/db" VERSION="20120830" COMMENT="XMLDB file for Moodle blocks/helpdesk"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="block_helpdesk_tickets" COMMENT="Community block" NEXT="block_helpdesk_changes">
+    <TABLE NAME="block_helpdesk_tickets" COMMENT="Helpdesk block" NEXT="block_helpdesk_changes">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="stateid"/>
         <FIELD NAME="stateid" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="authorid"/>
         <FIELD NAME="authorid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="stateid" NEXT="ownerid"/>
-        <FIELD NAME="ownerid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="authorid" NEXT="question"/>
-        <FIELD NAME="question" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="ownerid" NEXT="priority"/>
+        <FIELD NAME="ownerid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="authorid" NEXT="subject"/>
+        <FIELD NAME="subject" TYPE="char" LENGTH="70" NOTNULL="true" SEQUENCE="false" PREVIOUS="ownerid" NEXT="question"/>
+        <FIELD NAME="question" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" PREVIOUS="subject" NEXT="priority"/>
         <FIELD NAME="priority" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" COMMENT="priority level" PREVIOUS="question" NEXT="created"/>
         <FIELD NAME="created" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="priority"/>
       </FIELDS>

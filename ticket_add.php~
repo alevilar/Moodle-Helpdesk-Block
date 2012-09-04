@@ -27,26 +27,14 @@ echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
     
 ?>
 
-<h3><?php echo get_string('open_new_ticket', 'block_helpdesk');?></h3>
+<h3><?php echo get_string('block_helpdesk', 'open_new_ticket');?></h3>
 
-<?php echo get_string('open_new_ticket_form_description', 'block_helpdesk');?>
+<?php echo get_string('block_helpdesk', 'open_new_ticket_form_description');?>
 
 
 <form method="post" action="ticket_add_process.php">
     <textarea cols="80" rows="8" name="ticket_question"></textarea>
-
 	<br />
-    <?php echo get_string('priority', 'block_helpdesk')?>: 
-    <select name="priority">
-	<?php 
-		$first = true;
-	
-		foreach ( $priorities as $p ) {
-			echo "<option>$p</option>";
-		}
-	?>
-    </select>
-	<br /><br />
     <input type="submit" value="Enviar"></input>
 </form>
 <?php

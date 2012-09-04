@@ -10,6 +10,25 @@
 
 
 
+
+.formu_helpdesk{
+        background: #ddb;
+        padding: 20px;
+}
+.formu_helpdesk h4{
+        border-bottom: 1px solid silver;
+}
+.formu_helpdesk input[type=submit]:hover{
+        background: #00446B;
+        border-top: 1px solid #002438;
+        border-left: 1px solid #002438;
+        text-shadow: 1px 1px black;
+}
+.formu_helpdesk label{
+        margin: 10px;
+}
+
+
 /**
 	Diseño de los distintos estados
 **/
@@ -20,22 +39,13 @@
     font-size: 12px;
     padding: 2px 4px;
     text-shadow: 1px 1px 2px #393B0B;
-    filter: dropshadow(color=#393B0B, offx=1, offy=1);
-<<<<<<< HEAD
-    width: 80px;
-    float: left;
-=======
-   
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
+    filter: dropshadow(color=#393B0B, offx=1, offy=1); 
     margin-right: 5px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
     color: #fff;
     text-transform: uppercase;
-<<<<<<< HEAD
-=======
     text-align: center;
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 }
 
 
@@ -46,21 +56,11 @@
     padding: 2px 4px;
     text-shadow: 1px 1px 2px #ad9b25;
     filter: dropshadow(color=#ad9b25, offx=1, offy=1);
-<<<<<<< HEAD
-    width: 80px;
-    float: left;
-    margin-right: 5px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    text-transform: uppercase;
-=======
-
 margin-right: 5px;
 -webkit-border-radius: 10px;
 border-radius: 10px;
 text-transform: uppercase;
 text-align: center;
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 }
 
 
@@ -75,16 +75,11 @@ text-align: center;
     padding: 2px 4px;    
     color: #474700;
     margin-right: 5px;
-<<<<<<< HEAD
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    text-transform: uppercase;
-=======
 -webkit-border-radius: 10px;
 border-radius: 10px;
 text-transform: uppercase;
 text-align: center;
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
+
 }
 
 
@@ -99,11 +94,6 @@ text-align: center;
     padding: 2px 4px;            
     color: #474700;
     margin-right: 5px;
-<<<<<<< HEAD
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    text-transform: uppercase;
-=======
 -webkit-border-radius: 10px;
 border-radius: 10px;
 text-transform: uppercase;
@@ -121,7 +111,7 @@ text-align: center;
 	cursor:pointer;cursor:hand
 }
 
-#ticket_index tr:hover{
+#ticket_index tbody tr:hover{
 	background: #FCFCFC;
 }
 
@@ -165,7 +155,6 @@ ul.changes .date{
 .changetype-id-2, .changetype-id-4{
 	color: #667;
 	list-style: url(../blocks/helpdesk/pix/round.gif) ;
->>>>>>> b35c814d1e8891f38780093b26bc9f62d15f1f64
 }
 
 
@@ -218,4 +207,60 @@ p.question{
 
 .helpdesk-answers .changetype-id-1 .answers{
 	margin-left: 88px;
+}
+
+
+
+table.ticket-list{
+    width: 100%;
+}
+
+table.ticket-list td{
+    padding: 5px 0;
+    margin: 0;
+}
+
+table.ticket-list .date{
+    font-size: 10px;
+}
+
+
+table.ticket-list tbody tr:hover{
+    background: #F2F2F2;
+}
+
+
+table.ticket-list .txt-cortado{
+	width: 450px;
+        height: 18px;
+	float: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+        padding: 0 10px 0 10px;
+	
+}
+table.ticket-list .txt-cortado cite{
+    font-size: 11px;
+}
+
+table.ticket-list .txt-cortado:hover{
+	overflow: auto;
+        background: #F2F2F2;
+        white-space: normal;        
+        min-height: 42px;
+        max-height: 500px;
+        margin-top: -10px;
+        z-index: 99;
+        padding-bottom: 5px;
+}
+
+
+#page-content #region-main .region-content{
+    overflow: inherit !important;   
+}
+
+
+.side-post-only #page-content #region-main-box #region-post-box #region-main-wrap #region-main{
+    overflow: inherit !important;
 }
