@@ -1,3 +1,12 @@
+input[type="text"]:disabled
+{
+    background: grey;
+    height: 1px;
+    margin-bottom: 3px;
+}
+
+
+
 .block_helpdesk h1{
  	font-size: 15px !important;
 	margin: 10px 0px !important;
@@ -32,6 +41,21 @@
 /**
 	Diseño de los distintos estados
 **/
+
+.state{
+    background-color: #33AD5C;
+    border: 1px solid #2E4D38;
+    text-shadow: 1px 1px 2px #FFFF8D;
+    filter: dropshadow(color=#FFFF8D, offx=1, offy=1);
+    font-size: 12px;
+    padding: 2px 4px;            
+    color: #474700;
+    margin-right: 5px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    text-align: center;
+}
 
 .state-1{
     background-color: #B24C32;
@@ -84,20 +108,17 @@ text-align: center;
 
 
 .state-4{
-    background-color: #33AD5C;
-    border: 1px solid #2E4D38;
-    
-        text-shadow: 1px 1px 2px #FFFF8D;
-        filter: dropshadow(color=#FFFF8D, offx=1, offy=1);
-        
+    background-color: #F9B900;
+    border: 1px solid #393B0B;
     font-size: 12px;
-    padding: 2px 4px;            
-    color: #474700;
+    padding: 2px 4px;
+    text-shadow: 1px 1px 2px #ad9b25;
+    filter: dropshadow(color=#ad9b25, offx=1, offy=1);
     margin-right: 5px;
--webkit-border-radius: 10px;
-border-radius: 10px;
-text-transform: uppercase;
-text-align: center;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    text-align: center;
 }
 
 
@@ -147,7 +168,7 @@ ul.changes .date{
 	list-style: url(../blocks/helpdesk/pix/Reassigned.gif) ;
 }
 
-.changetype-id-3 a,.changetype-id-2 a,{
+.changetype-id-3 a,.changetype-id-2 a{
 	color: #65A;
 }
 

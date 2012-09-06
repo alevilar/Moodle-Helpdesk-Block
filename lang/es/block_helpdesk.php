@@ -95,3 +95,14 @@
     $string['priority_name_hight'] = $string['hight'] = 'Alta';
     
     $string['no_changes'] = 'Sin Cambios' ;
+    
+    
+    $string['showingmyauthoredtickets'] = 'Mis Tickets' ;
+    $string['myownticketsexplained'] = 'Listado de tickets en los que yo estoy designado como responsable' ;
+    $string['myauthoredticketsexplained'] = 'Listado de tickets en los que yo soy el autor' ;
+    
+    $string['state_saved_msg'] = 'Estado guardado' ;
+    $string['stateslist'] = 'Listado de Estados';
+    
+    $string['state'] = 'Estado' ;
+    

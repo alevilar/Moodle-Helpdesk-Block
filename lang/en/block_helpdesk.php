@@ -98,4 +98,12 @@
     $string['label_state_change'] = 'Change Status';
     
     
+    $string['showingmyauthoredtickets'] = 'My Tickets' ;    
+    $string['myownticketsexplained'] = 'List of tickets where iḿ the owner or responsable' ;
+    $string['myauthoredticketsexplained'] = 'List of tickets autored by me' ;
     
+    $string['state_saved_msg'] = 'State saved';
+    
+    
+    $string['stateslist'] = 'States List';
+    $string['state'] = 'State' ;

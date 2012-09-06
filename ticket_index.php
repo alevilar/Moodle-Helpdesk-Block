@@ -88,6 +88,15 @@
 	 $where[] = "a.username LIKE  '?$authorSelected?'";
     }
     
+    // Filter by AUTHOR_ID
+    $authorIdSelected = '';
+    if ( !empty($_GET) && !empty($_GET['author_id']) ) {
+	 $fields[] = "o.username";
+	 $join[] = "{user} o ON (o.id = t.authorid)"; 
+	 $authorIdSelected = $_GET['author_id'];
+	 $where[] = "t.authorid = '$authorIdSelected'";
+    }
+    
     // Filter by UNASSIGNED
     $unassignedSelected = 0;
     if ( !empty($_GET) && !empty($_GET['unassigned']) ) {	 
@@ -150,7 +159,8 @@
 		<p>		
 		<form action="ticket_index.php" method='get' class="formu_helpdesk">
 			<h4><?php echo get_string('advanced_filters', 'block_helpdesk')?></h4>
-			<label style="padding-left: 34px;"><?php echo get_string('Author','block_helpdesk')?></label><input type='text' name='authorname' value='<?php echo $authorSelected?>'/>
+			<label style="padding-left: 34px;"><?php echo get_string('Author','block_helpdesk')?></label>
+                        <input type='text' name='authorname' value='<?php echo $authorSelected?>' <?php echo ($authorIdSelected)?'disabled="true"':''?>/>
 			
 			<label><?php echo get_string('State','block_helpdesk')?></label>
 				<select type='text' name='stateid'/ style="width: 200px;">
@@ -173,7 +183,7 @@
                            
                         <input type='hidden' name='owner_id' value='<?php echo $ownerIdSelected?>' />
                            
-			<label><?php echo get_string('Owner','block_helpdesk')?></label><input type='text' name='ownername' value='<?php echo $ownerSelected?>' />
+			<label><?php echo get_string('Owner','block_helpdesk')?></label><input type='text' name='ownername' value='<?php echo $ownerSelected?>'   <?php echo ($ownerIdSelected)?'disabled="true"':''?>/>
 
 			<label><?php echo get_string('Unassigned','block_helpdesk')?></label><input type='checkbox' name='unassigned'  <?php echo $unassignedSelected?'checked':''; ?>/>
 
@@ -205,7 +215,13 @@
     } // EOF capability if can admin
 
     if ($ownerIdSelected) {
-            ?> <h3><?php echo get_string('showingmyassignedtickets', 'block_helpdesk')?></h3><?php
+            ?> <h3><?php echo get_string('showingmyassignedtickets', 'block_helpdesk')?></h3>
+            <p><?php echo get_string('myownticketsexplained', 'block_helpdesk');?></p>
+            <?php
+    } elseif( 	 $authorIdSelected ) {
+            ?> <h3><?php echo get_string('showingmyauthoredtickets', 'block_helpdesk')?></h3>
+            <p><?php echo get_string('myauthoredticketsexplained', 'block_helpdesk');?></p>
+            <?php
     } else {
             ?> <h3><?php echo get_string('Tickets_Lists','block_helpdesk');?></h3><?php
     }
@@ -233,8 +249,8 @@
         foreach ($tickets as $t) {   
 		$urlTo = "ticket_answer?ticketid=$t->id";   
 	  echo "<tr onclick='window.location = \"$urlTo\"'>";    
-    	    echo "<td class='state'><div class='state-$t->stateid'>$t->status</div></td>";  
-	    echo "<td class='priority'>".get_string( $priorities[$t->priority], 'block_helpdesk')."</td>";
+    	    echo "<td class='state'><div class='state state-$t->stateid'>$t->status</div></td>";  
+            echo "<td class='priority'>".get_string( $priorities[$t->priority], 'block_helpdesk')."</td>";
             echo "<td class='date'>".date('Y-m-d H:i', $t->created)."</td>";
 
 	    $userObj = $DB->get_record('user', array('id'=>$t->authorid));

@@ -48,7 +48,7 @@ class block_helpdesk extends block_base {
         $this->content->text .= "<li>".$urlTicketAdd."</li>";
 
 	
-	$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
+	$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php?author_id='.$USER->id);
 	$urlTicketAdd = html_writer::tag('a',  get_string('Tickets_Lists', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
 	$this->content->text .= '<li>'.$urlTicketAdd."</li>";
 	
@@ -73,8 +73,21 @@ class block_helpdesk extends block_base {
 		$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php?unassigned=1');
 		$urlTicketAdd = html_writer::tag('a',  get_string('pendingtickets', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
 		$this->content->text .= '<li>'.$urlTicketAdd."</li>";
-
+                
 		$this->content->text .= '</ul>';
+                
+                ?>
+
+                <ul>
+                <?php
+
+                            $urlTicketAdd = new moodle_url('/blocks/helpdesk/states_index.php');
+                            $urlTicketAdd = html_writer::tag('a',  get_string('stateslist', 'block_helpdesk'), array('href' => $urlTicketAdd ));        
+                            $this->content->text .= '<li>'.$urlTicketAdd."</li>";
+
+                ?>
+                </ul>
+                <?php
 	}
         
         return $this->content;

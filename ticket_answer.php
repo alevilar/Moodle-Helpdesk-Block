@@ -182,7 +182,7 @@ echo $OUTPUT->header();
 		</div>
 
 	<?php
-		echo "<div class='state-$ticket->stateid'>$ticket->state</div>";	
+		echo "<div class='state state-$ticket->stateid'>$ticket->state</div>";	
 	?>
 		
 	</div>
