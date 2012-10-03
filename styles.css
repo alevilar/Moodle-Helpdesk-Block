@@ -1,3 +1,4 @@
+
 input[type="text"]:disabled
 {
     background: grey;
@@ -129,7 +130,12 @@ text-align: center;
 
 
 #ticket_index tr{
-	cursor:pointer;cursor:hand
+	cursor:pointer;cursor:hand;
+        text-align: center;
+}
+
+#ticket_index tr td.question{
+        text-align: left;
 }
 
 #ticket_index tbody tr:hover{

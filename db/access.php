@@ -38,14 +38,13 @@ $capabilities = array(
     // Limits users to only creating 'unconfirmed' bookings
     // (unless they are the room administrator)
     'block/helpdesk:admin' => array(
-
         'captype' => 'write',
-        'contextlevel' => CONTEXT_SYSTEM,
+        'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(
             'guest'          => CAP_PREVENT,
             'student'        => CAP_PREVENT,
-            'teacher'        => CAP_ALLOW,
-            'editingteacher' => CAP_ALLOW,
+            'teacher'        => CAP_PREVENT,
+            'editingteacher' => CAP_PREVENT,
             'coursecreator'  => CAP_ALLOW,
             'manager'          => CAP_ALLOW
         )

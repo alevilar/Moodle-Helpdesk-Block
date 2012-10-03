@@ -5,10 +5,11 @@ require_once(dirname(__FILE__).'/config.php');
 
 require_login();
 
+$p = $DB->get_record('block_instances', array('blockname' => 'helpdesk'), $fields='*', IGNORE_MULTIPLE);
+    
+    $context = get_context_instance(CONTEXT_BLOCK, $p->id );
+    $PAGE->set_context($context);
 
-
-$context = get_context_instance(CONTEXT_SYSTEM);
-$PAGE->set_context($context);
  
 $PAGE->set_url('/blocks/helpdesk/ticket_add.php');
 $PAGE->set_heading($SITE->fullname);

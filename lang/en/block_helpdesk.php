@@ -23,9 +23,9 @@
     $string['Closed Resolved'] = 'Closed Resolved';
     $string['Closed Duplicated'] = 'Closed Duplicated';
     $string['Closed Invalid'] = 'Closed Invalid';
-    $string['Comment'] = 'Comment';
-    $string['State Change'] = 'State Change';
-    $string['Assignament Changed'] = 'Assignament Changed';
+    $string['comment'] = 'Comment';
+    $string['state_change'] = 'State Change';
+    $string['assignament_changed'] = 'Assignament Changed';
 
 
     $string['open_new_ticket'] = 'Open New Ticket';

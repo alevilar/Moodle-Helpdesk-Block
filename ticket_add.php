@@ -4,8 +4,11 @@ require_once(dirname(__FILE__).'/config.php');
 
 require_login();
 
-$context = get_context_instance(CONTEXT_SYSTEM);
-$PAGE->set_context($context);
+$p = $DB->get_record('block_instances', array('blockname' => 'helpdesk'), $fields='*', IGNORE_MULTIPLE);
+    
+    $context = get_context_instance(CONTEXT_BLOCK, $p->id );
+    $PAGE->set_context($context);
+
  
 $PAGE->set_url('/blocks/helpdesk/ticket_add.php');
 $PAGE->set_heading($SITE->fullname);
@@ -49,7 +52,7 @@ echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
 		$first = true;
 	
 		foreach ( $priorities as $k=>$p ) {
-			echo "<option value='$k'>$p</option>";
+			echo "<option value='$k'>".get_string($p, 'block_helpdesk')."</option>";
 		}
 	?>
     </select>

@@ -4,10 +4,10 @@
 
     require_login();
 
-
-    $context = get_context_instance(CONTEXT_SYSTEM);
+    $p = $DB->get_record('block_instances', array('blockname' => 'helpdesk'), $fields='*', IGNORE_MULTIPLE);
+    
+    $context = get_context_instance(CONTEXT_BLOCK, $p->id );
     $PAGE->set_context($context);
-
 
     // verify if user is MANAGER
     $es_admin = false;
@@ -249,7 +249,7 @@
         foreach ($tickets as $t) {   
 		$urlTo = "ticket_answer?ticketid=$t->id";   
 	  echo "<tr onclick='window.location = \"$urlTo\"'>";    
-    	    echo "<td class='state'><div class='state state-$t->stateid'>$t->status</div></td>";  
+    	    echo "<td class='states'><div class='state state-$t->stateid'>$t->status</div></td>";  
             echo "<td class='priority'>".get_string( $priorities[$t->priority], 'block_helpdesk')."</td>";
             echo "<td class='date'>".date('Y-m-d H:i', $t->created)."</td>";
 

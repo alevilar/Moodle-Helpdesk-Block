@@ -24,20 +24,14 @@ class block_helpdesk extends block_base {
 
 
     function get_content() {
-        global $USER; 
+        global $USER, $PAGE;
         $courseid = optional_param('courseid', 0, PARAM_INTEGER);
         
         if ($courseid == SITEID) {
             $courseid = 0;
         }
-        if ($courseid) {
-            $course = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
-            $PAGE->set_course($course);
-            $context = $PAGE->context;
-        } else {
-            $context = get_context_instance(CONTEXT_SYSTEM);            
-        }
-
+        
+        $context = get_context_instance(CONTEXT_BLOCK, $this->instance->id);
         $this->content         =  new stdClass;
 
         $this->content->text = '';
@@ -78,6 +72,8 @@ class block_helpdesk extends block_base {
                 
                 ?>
 
+                <?php // Special admin ?>
+                <?php if ( has_capability('moodle/site:config', $context)) { ?>
                 <ul>
                 <?php
 
@@ -88,6 +84,7 @@ class block_helpdesk extends block_base {
                 ?>
                 </ul>
                 <?php
+                }
 	}
         
         return $this->content;

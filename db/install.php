@@ -28,20 +28,20 @@ function xmldb_block_helpdesk_install () {
 
 	// Insert DEFAULT Change Types
 	$record = new stdClass();
-        $record->name   = 'Comment';
+        $record->name   = 'comment';
         $lastinsertid = $DB->insert_record('block_helpdesk_change_types', $record, $returnId = true);
 	
 	$record = new stdClass();	
-        $record->name   = 'State Change';
+        $record->name   = 'state_change';
         $lastinsertid = $DB->insert_record('block_helpdesk_change_types', $record, $returnId = true);
 
 	$record = new stdClass();	
-        $record->name   = 'Assignament Changed';
+        $record->name   = 'assignament_changed';
         $lastinsertid = $DB->insert_record('block_helpdesk_change_types', $record, $returnId = true);
         
         
         $record = new stdClass();	
-        $record->name   = 'Priority Changed';
+        $record->name   = 'priority_changed';
         $lastinsertid = $DB->insert_record('block_helpdesk_change_types', $record, $returnId = true);
 
 

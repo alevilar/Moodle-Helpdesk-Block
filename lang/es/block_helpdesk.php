@@ -26,10 +26,10 @@
     $string['Closed Resolved'] = 'Cerrado Resuelto';
     $string['Closed Duplicated'] = 'Cerrado Duplicado';
     $string['Closed Invalid'] = 'Cerrado Inválido';
-    $string['Comment'] = 'Comemtario';
+    $string['comment'] = 'Comemtario';
     $string['state_change'] = 'Cambio de estado';
     $string['label_state_change'] = 'Modificar estado';
-    $string['Assignament Changed'] = 'Cambió de persona asignada';
+    $string['assignament_changed'] = 'Cambió de persona asignada';
 
 
     $string['open_new_ticket'] = 'Abrir Nuevo Ticket';
