@@ -6,9 +6,12 @@ require_once(dirname(__FILE__).'/config.php');
 require_login();
 
 
+$p = $DB->get_record('block_instances', array('blockname' => 'helpdesk'), $fields='*', IGNORE_MULTIPLE);
+    
+    $context = get_context_instance(CONTEXT_BLOCK, $p->id );
+    $PAGE->set_context($context);
 
-$context = get_context_instance(CONTEXT_SYSTEM);
-$PAGE->set_context($context);
+
  
 $PAGE->set_url('/blocks/helpdesk/ticket_add.php');
 $PAGE->set_heading($SITE->fullname);
@@ -28,19 +31,12 @@ if (!empty($notificationerror)) {
     echo $OUTPUT->header();
     echo $OUTPUT->heading(get_string('helpdesk', 'block_helpdesk'), 3, 'main');
     
-    if ( !empty($_POST['ticket_question']) ) {
-        $answ = $_POST['ticket_question'];
-        
-        $record = new stdClass();
-        $record->authorid   = $USER->id;
-        $record->question = $answ;
-        $record->created  = time();
-	$record->stateid = STATE_OPEN; // status init
-        $lastinsertid = $DB->insert_record('block_helpdesk_tickets', $record, $returnId = true);
-
+    if ( !empty($_GET['ticket_id']) ) {
+       
+    
         // si hubo error al guardar...
-        if (!$lastinsertid) {
-            echo "Error al guardar, por favor intente nuevamente.";
+        if (!$DB->delete_records('block_helpdesk_tickets', array('id' => $_GET['ticket_id'])) ) {
+            echo get_string("error_save_to_db");
             echo $OUTPUT->footer();
             die;
         }
@@ -48,7 +44,7 @@ if (!empty($notificationerror)) {
 ?>
 
 <p>
-¡Gracias! responderemos a la brevedad
+<?php echo get_string('ticket_deleted', 'block_helpdesk');?>
 </p>
 <?php
 

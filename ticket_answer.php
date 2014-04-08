@@ -304,9 +304,14 @@ echo $OUTPUT->header();
 		    <input type="submit" value="Enviar" />
 		    <?php 
 
-			$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php'); 
+			$urlTicketAdd = new moodle_url('/blocks/helpdesk/ticket_index.php');
+			$urlTicketDel = new moodle_url('/blocks/helpdesk/ticket_delete.php?ticket_id='.$ticket->id);  
 			?>
 		    <input type="button" value="Cancelar y Volver" onclick="window.location='<?php echo $urlTicketAdd?>'" />
+
+  		   <?php if (has_capability('block/helpdesk:admin', $context)) { ?>
+		    <a href="<?php echo $urlTicketDel?>" onclick="return confirm('¿Seguro desea borrar?\nNo se puede volver atrás esta acción');" style="float: right;">Eliminar ticket</a>
+		   <?php } ?>
 	    </div>
         </form>
         <?php

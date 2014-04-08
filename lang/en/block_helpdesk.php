@@ -107,3 +107,4 @@
     
     $string['stateslist'] = 'States List';
     $string['state'] = 'State' ;
+    $string['ticket_deleted'] = 'Ticket was deleted' ;
